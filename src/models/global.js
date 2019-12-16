@@ -7,21 +7,21 @@ const GlobalModel = {
   },
   effects: {
     *fetchNotices(_, { call, put, select }) {
-      const data = yield call(queryNotices);
-      yield put({
-        type: 'saveNotices',
-        payload: data,
-      });
-      const unreadCount = yield select(
-        state => state.global.notices.filter(item => !item.read).length,
-      );
-      yield put({
-        type: 'user/changeNotifyCount',
-        payload: {
-          totalCount: data.length,
-          unreadCount,
-        },
-      });
+      // const data = yield call(queryNotices);
+      // yield put({
+      //   type: 'saveNotices',
+      //   payload: data,
+      // });
+      // const unreadCount = yield select(
+      //   state => state.global.notices.filter(item => !item.read).length,
+      // );
+      // yield put({
+      //   type: 'user/changeNotifyCount',
+      //   payload: {
+      //     totalCount: data.length,
+      //     unreadCount,
+      //   },
+      // });
     },
 
     *clearNotices({ payload }, { put, select }) {

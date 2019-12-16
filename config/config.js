@@ -72,6 +72,7 @@ export default {
   targets: {
     ie: 11,
   },
+  publicPath: './',
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
@@ -329,7 +330,7 @@ export default {
             {
               path: '/',
               redirect: '/dashboard/analysis',
-              authority: ['admin', 'user'],
+              // authority: ['admin', 'user'],
             },
             {
               name: 'Orders',
