@@ -23,7 +23,7 @@ export function getAuthority(str) {
     return ['admin'];
   }
 
-  return authority;
+  return ['user'];
 }
 export function setAuthority(authority) {
   const proAuthority = typeof authority === 'string' ? [authority] : authority;
