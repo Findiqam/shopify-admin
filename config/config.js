@@ -369,7 +369,6 @@ export default {
               name: 'Customers',
               icon: 'team',
               path: '/customers',
-              component:'./customers'
             },
             {
               component: '404',
