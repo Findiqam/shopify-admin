@@ -30,7 +30,7 @@ class Drafts extends React.Component {
         title: 'Customer',
         dataIndex: 'customer',
         key: 'customer',
-        render: customer => (customer.first_name + " " + customer.last_name),
+        render: customer => (customer ? customer.first_name + " " + customer.last_name : "没有客户"),
       },
       {
         title: 'Payment',
@@ -62,7 +62,7 @@ class Drafts extends React.Component {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       },
       getCheckboxProps: record => ({
-        disabled: record.customer.first_name === '', // Column configuration not to be checked
+        // disabled: record.customer.first_name === '', // Column configuration not to be checked
       }),
     };
     return (
