@@ -54,7 +54,9 @@ const request = extend({
   // credentials: 'include', // 默认请求是否带上cookie
   headers: {
     // 'Authorization': 'Basic OTlkZjE2ZjViNWI1MTkyZWVlNWQ2ZDUwY2NhMzBmZjM6YWI5ZGMwY2RmNTBjNjlkN2E3MjM5MmNhMzJjODFkMzc='
-    'X-Shopify-Access-Token': '6d699c307bc71730981e6eaedba967cd'
-  }
+    'X-Shopify-Access-Token': '6d699c307bc71730981e6eaedba967cd',
+    
+  },
+  getResponse:true,
 });
 export default request;
