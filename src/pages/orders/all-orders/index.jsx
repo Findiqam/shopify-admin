@@ -21,20 +21,21 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 class AllOrders extends React.Component {
   state = {
-    created_at: {
+    created_at: { //暂存created_at相关属性
       name: 'created_at_min',
       value: '',
       created_at_date: '',
       created_at_time: '',
     },
-    updated_at: {
+    updated_at: { //暂存updated_at相关属性
       name: 'updated_at_min',
       value: '',
       updated_at_date: '',
       updated_at_time: '',
     },
-    paymentStatusOption: false,
-    fulfillmentStatusOption: false,
+    paymentStatusOption: false, //paymenStatus是否可操作
+    fulfillmentStatusOption: false, //fulfillmentStatus是否可操作
+    moreFilter: false,//是否展示更多过滤器
   }
   componentDidMount() {
     const { getOrders } = this.props;
@@ -104,8 +105,8 @@ class AllOrders extends React.Component {
         <PageHeaderWrapper>
           <Card>
             <Form layout="vertical">
-              <Row gutter={16}>
-                <Col span={8}>
+              <Row gutter={24}>
+                <Col span={12}>
                   <Form.Item label="Status">
                     <Select
                       defaultValue="any"
@@ -121,7 +122,7 @@ class AllOrders extends React.Component {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={12}>
                   <Form.Item label="Payment status">
                     <Select
                       mode="multiple"
@@ -153,7 +154,7 @@ class AllOrders extends React.Component {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={12}>
                   <Form.Item label="Fulfillment status">
                     <Select
                       mode="multiple"
@@ -181,167 +182,245 @@ class AllOrders extends React.Component {
                     </Select>
                   </Form.Item>
                 </Col>
-              </Row>
-              <Form.Item label="Name like">
-                <Search
-                  placeholder="input search text"
-                  defaultValue={filter.name}
-                  allowClear={true}
-                  enterButton="Screen"
-                  onSearch={value => setFilter({ name: "name", value })}
-                />
-              </Form.Item>
-              <Form.Item label="Created at or">
-                <InputGroup compact>
-                  <Select
-                    defaultValue="created_at_min"
-                    style={{ width: 80 }}
-                    onChange={
-                      value => {
-                        this.setState({
-                          created_at: {
-                            ...this.state.created_at,
-                            name: value
-                          }
-                        })
-                      }
-                    }
-                  >
-                    <Option value="created_at_min">After</Option>
-                    <Option value="created_at_max">Before</Option>
-                  </Select>
-                  <DatePicker
-                    format='YYYY-MM-DD'
-                    ref="created_at_date"
-                    onChange={
-                      (d, dstr) => {
-                        console.log(moment(d).format(), dstr)
-                        let created_at_value = moment(dstr + " " + this.state.created_at.created_at_time).format();
-                        if (created_at_value === "Invalid date") {
-                          created_at_value = '';
-                        }
-                        this.setState({
-                          created_at: {
-                            ...this.state.created_at,
-                            value: created_at_value,
-                            created_at_date: dstr,
-                          }
-                        })
-                      }
-                    }
-                  />
-                  <TimePicker
-                    format='HH:mm:ss'
-                    ref="created_at_time"
-                    onChange={
-                      (t, tstr) => {
-                        let created_at_value = moment(this.state.created_at.created_at_date + " " + tstr).format();
-                        if (created_at_value === "Invalid date") {
-                          created_at_value = '';
-                        }
-                        this.setState({
-                          created_at: {
-                            ...this.state.created_at,
-                            value: created_at_value,
-                            created_at_time: tstr,
-                          }
-                        })
-                      }
-                    }
-                  />
-                  <Button
-                    type="primary"
-                    onClick={
-                      () => {
-                        setFilter({ name: this.state.created_at.name, value: this.state.created_at.value });
-                        getOrders();
-                      }
-                    }
-                  >
-                    Screen
+                {
+                  this.state.moreFilter &&
+                  <Col span={24}>
+                    <Row gutter={24}>
+                      <Col span={12}>
+                        <Form.Item label="Created at or">
+                          <InputGroup compact>
+                            <Select
+                              defaultValue={this.state.created_at.name}
+                              onChange={
+                                value => {
+                                  this.setState({
+                                    created_at: {
+                                      ...this.state.created_at,
+                                      name: value
+                                    }
+                                  });
+                                  setFilter({ name: value, value: this.state.created_at.value });
+                                }
+                              }
+                            >
+                              <Option value="created_at_min">After</Option>
+                              <Option value="created_at_max">Before</Option>
+                            </Select>
+                            <DatePicker
+                              format='YYYY-MM-DD'
+                              onChange={
+                                (d, dstr) => {
+                                  let created_at_value = moment(dstr + " " + this.state.created_at.created_at_time).format();
+                                  if (created_at_value === "Invalid date") {
+                                    created_at_value = '';
+                                  }
+                                  this.setState({
+                                    created_at: {
+                                      ...this.state.created_at,
+                                      value: created_at_value,
+                                      created_at_date: dstr,
+                                    }
+                                  });
+                                  setFilter({ name: this.state.created_at.name, value: created_at_value });
+                                }
+                              }
+                            />
+                            <TimePicker
+                              format='HH:mm:ss'
+                              onChange={
+                                (t, tstr) => {
+                                  let created_at_value = moment(this.state.created_at.created_at_date + " " + tstr).format();
+                                  if (created_at_value === "Invalid date") {
+                                    created_at_value = '';
+                                  }
+                                  this.setState({
+                                    created_at: {
+                                      ...this.state.created_at,
+                                      value: created_at_value,
+                                      created_at_time: tstr,
+                                    }
+                                  });
+                                  setFilter({ name: this.state.created_at.name, value: created_at_value });
+                                }
+                              }
+                            />
+                            <Button
+                              type="primary"
+                              onClick={
+                                () => {
+                                  getOrders();
+                                }
+                              }
+                            >
+                              Screen
                   </Button>
-                </InputGroup>
-              </Form.Item>
-              <Form.Item label="Updated at or">
-                <InputGroup compact>
-                  <Select
-                    defaultValue="updated_at_min"
-                    style={{ width: 80 }}
-                    onChange={
-                      value => {
-                        this.setState({
-                          updated_at: {
-                            ...this.state.updated_at,
-                            name: value
-                          }
-                        })
-                      }
-                    }
-                  >
-                    <Option value="updated_at_min">After</Option>
-                    <Option value="updated_at_max">Before</Option>
-                  </Select>
-                  <DatePicker
-                    format='YYYY-MM-DD'
-                    ref="updated_at_date"
-                    onChange={
-                      (d, dstr) => {
-                        let updated_at_value = moment(dstr + " " + this.state.updated_at.updated_at_time).format();
-                        if (updated_at_value === "Invalid date") {
-                          updated_at_value = '';
-                        }
-                        this.setState({
-                          updated_at: {
-                            ...this.state.updated_at,
-                            value: updated_at_value,
-                            updated_at_date: dstr,
-                          }
-                        })
-                      }
-                    }
-                  />
-                  <TimePicker
-                    format='HH:mm:ss'
-                    ref="updated_at_time"
-                    onChange={
-                      (t, tstr) => {
-                        let updated_at_value = moment(this.state.updated_at.updated_at_date + " " + tstr).format();
-                        if (updated_at_value === "Invalid date") {
-                          updated_at_value = '';
-                        }
-                        this.setState({
-                          updated_at: {
-                            ...this.state.updated_at,
-                            value: updated_at_value,
-                            updated_at_time: tstr,
-                          }
-                        })
-                      }
-                    }
-                  />
-                  <Button
-                    type="primary"
-                    onClick={
-                      () => {
-                        setFilter({ name: this.state.updated_at.name, value: this.state.updated_at.value });
-                        getOrders();
-                      }
-                    }
-                  >
-                    Screen
+                          </InputGroup>
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item label="Updated at or">
+                          <InputGroup compact>
+                            <Select
+                              defaultValue={this.state.updated_at.name}
+                              onChange={
+                                value => {
+                                  this.setState({
+                                    updated_at: {
+                                      ...this.state.updated_at,
+                                      name: value
+                                    }
+                                  });
+                                  setFilter({ name: value, value: this.state.updated_at.value });
+                                }
+                              }
+                            >
+                              <Option value="updated_at_min">After</Option>
+                              <Option value="updated_at_max">Before</Option>
+                            </Select>
+                            <DatePicker
+                              format='YYYY-MM-DD'
+                              onChange={
+                                (d, dstr) => {
+                                  let updated_at_value = moment(dstr + " " + this.state.updated_at.updated_at_time).format();
+                                  if (updated_at_value === "Invalid date") {
+                                    updated_at_value = '';
+                                  }
+                                  this.setState({
+                                    updated_at: {
+                                      ...this.state.updated_at,
+                                      value: updated_at_value,
+                                      updated_at_date: dstr,
+                                    }
+                                  });
+                                  setFilter({ name: this.state.updated_at.name, value: updated_at_value });
+                                }
+                              }
+                            />
+                            <TimePicker
+                              format='HH:mm:ss'
+                              onChange={
+                                (t, tstr) => {
+                                  let updated_at_value = moment(this.state.updated_at.updated_at_date + " " + tstr).format();
+                                  if (updated_at_value === "Invalid date") {
+                                    updated_at_value = '';
+                                  }
+                                  this.setState({
+                                    updated_at: {
+                                      ...this.state.updated_at,
+                                      value: updated_at_value,
+                                      updated_at_time: tstr,
+                                    }
+                                  });
+                                  setFilter({ name: this.state.updated_at.name, value: updated_at_value });
+                                }
+                              }
+                            />
+                            <Button
+                              type="primary"
+                              onClick={
+                                () => {
+                                  getOrders();
+                                }
+                              }
+                            >
+                              Screen
                   </Button>
-                </InputGroup>
-              </Form.Item>
-              <Button
-                type="default"
-                onClick={
-                  () => {
-                    resetFilter();
-                  }
+                          </InputGroup>
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item label="Name like">
+                          <Search
+                            placeholder="input search text"
+                            defaultValue={filter.name}
+                            allowClear={true}
+                            enterButton="Screen"
+                            onSearch={
+                              value => {
+                                setFilter({ name: "name", value });
+                                getOrders();
+                              }
+                            }
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item label="More option">
+                          <Button
+                            style={{ marginRight: 20 }}
+                            type="default"
+                            onClick={
+                              () => {
+                                resetFilter();
+                                this.setState({
+                                  moreFilter: false
+                                })
+                                getOrders();
+                              }
+                            }
+                          >
+                           All reset
+                    </Button>
+                          <Button
+                            onClick={
+                              () => {
+                                this.setState({
+                                  moreFilter: !this.state.moreFilter
+                                });
+                                const value = '';
+                                setFilter({ name: "name", value });
+                                setFilter({ name: "created_at_min", value });
+                                setFilter({ name: "created_at_max", value });
+                                setFilter({ name: "updated_at_min", value });
+                                setFilter({ name: "updated_at_max", value });
+                                getOrders();
+                              }
+                            }
+                          >
+                            Close and reset
+                      {this.state.moreFilter ? <Icon type="up"></Icon> : <Icon type="down"></Icon>}
+                          </Button>
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </Col>
                 }
-              >
-                Reset
-            </Button>
+                {
+                  !this.state.moreFilter &&
+                  <Col span={12}>
+                    <Form.Item label="More option">
+                      <Button
+                        style={{ marginRight: 20 }}
+                        type="default"
+                        onClick={
+                          () => {
+                            resetFilter();
+                            this.setState({
+                              moreFilter: false
+                            })
+                            getOrders();
+                          }
+                        }
+                      >
+                        All reset
+                    </Button>
+                      <Button
+                        onClick={
+                          () => {
+                            this.setState({
+                              moreFilter: !this.state.moreFilter
+                            })
+                          }
+                        }
+                      >
+                        More filter
+                      {this.state.moreFilter ? <Icon type="up"></Icon> : <Icon type="down"></Icon>}
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                }
+
+              </Row>
             </Form>
             <Table
               columns={columns}
@@ -350,17 +429,18 @@ class AllOrders extends React.Component {
               pagination={false}
               loading={loading}
             />
-            <Button.Group>
+            <Row type="flex" justify="end">
+              <Button.Group style={{margin:20}}>
               <Button type="primary" disabled={previous === ''} onClick={() => previousPage()}>
                 <Icon type="left" />
-                previous
               </Button>
-              {"    第" + nowPage + "页    "}
+              <Button disabled>{nowPage + " pages"}</Button>
               <Button type="primary" disabled={next === ''} onClick={() => nextPage()}>
-                next
                 <Icon type="right" />
               </Button>
             </Button.Group>
+            </Row>
+            
           </Card>
 
         </PageHeaderWrapper>

@@ -86,7 +86,7 @@ const OrdersModel = { //orders model
                 }
             })
         },
-        *setFilter_e(action, { call, put, select }) { //设置filter
+        *setFilter_e(action, { call, put, select }) { //设置filter;action.payload={name,value}
             if (action.payload.name === "created_at_min" || action.payload.name === "created_at_max") { //如果传入的created_at相关，先重置一次created_at相关
                 yield put({
                     type: 'resetFilterCreated_r',
@@ -144,7 +144,7 @@ const OrdersModel = { //orders model
                 ...action.payload,
             }
         },
-        setFilter_r(state, action) { //设置filter
+        setFilter_r(state, action) { //设置filter;action.payload={name,value}
             return {
                 ...state,
                 filter: {
