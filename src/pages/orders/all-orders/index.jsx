@@ -10,6 +10,7 @@ import {
   Button,
   Icon,
   Row, Col,
+  Tooltip,
 } from 'antd';
 import moment, { months } from 'moment';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
@@ -141,54 +142,58 @@ class AllOrders extends React.Component {
               }
               extra={
                 <>
-                  <Button
-                    size="small"
-                    style={{ marginRight: 20 }}
-                    onClick={
-                      () => {
-                        resetFilter();
-                        this.setState({
-                          moreFilter: false
-                        })
-                        getOrders();
-                      }
-                    }
-                  >
-                    All reset
-                </Button>
-                  <Button
-                    size="small"
-                    onClick={
-                      () => {
-                        if (this.state.moreFilter) {
+                  <Tooltip title="重置所有过滤选项">
+                    <Button
+                      size="small"
+                      style={{ marginRight: 20 }}
+                      onClick={
+                        () => {
+                          resetFilter();
                           this.setState({
-                            moreFilter: !this.state.moreFilter
-                          });
-                          const value = '';
-                          setFilter({ name: "name", value });
-                          setFilter({ name: "created_at_min", value });
-                          setFilter({ name: "created_at_max", value });
-                          setFilter({ name: "updated_at_min", value });
-                          setFilter({ name: "updated_at_max", value });
+                            moreFilter: false
+                          })
                           getOrders();
-                        } else {
-                          this.setState({
-                            moreFilter: !this.state.moreFilter
-                          });
                         }
-
                       }
-                    }
-                  >
-                    {this.state.moreFilter ? <>Close and reset<Icon type="up"></Icon> </> : <>More filter<Icon type="down"></Icon></>}
-                  </Button>
+                    >
+                      All reset
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title={this.state.moreFilter?"关闭更多过滤并重置更多过滤中的过滤选项":"更多过滤器"}>
+                    <Button
+                      size="small"
+                      onClick={
+                        () => {
+                          if (this.state.moreFilter) {
+                            this.setState({
+                              moreFilter: !this.state.moreFilter
+                            });
+                            const value = '';
+                            setFilter({ name: "name", value });
+                            setFilter({ name: "created_at_min", value });
+                            setFilter({ name: "created_at_max", value });
+                            setFilter({ name: "updated_at_min", value });
+                            setFilter({ name: "updated_at_max", value });
+                            getOrders();
+                          } else {
+                            this.setState({
+                              moreFilter: !this.state.moreFilter
+                            });
+                          }
+
+                        }
+                      }
+                    >
+                      {this.state.moreFilter ? <>Close and reset<Icon type="up"></Icon> </> : <>More filter<Icon type="down"></Icon></>}
+                    </Button>
+                  </Tooltip>
                 </>
               }
             >
               <Form layout="vertical">
                 <Row gutter={24}>
                   <Col span={8}>
-                    <Form.Item label="Status">
+                    <Form.Item label={<Tooltip title="根据订单的状态进行筛选">Status</Tooltip>}>
                       <Select
                         defaultValue="any"
                         value={filter.status}
@@ -204,7 +209,7 @@ class AllOrders extends React.Component {
                     </Form.Item>
                   </Col>
                   <Col span={8}>
-                    <Form.Item label="Payment status">
+                    <Form.Item label={<Tooltip title="根据订单的支付状态进行筛选">Payment status</Tooltip>}>
                       <Select
                         mode="multiple"
                         placeholder="Please select"
@@ -236,7 +241,7 @@ class AllOrders extends React.Component {
                     </Form.Item>
                   </Col>
                   <Col span={8}>
-                    <Form.Item label="Fulfillment status">
+                    <Form.Item label={<Tooltip title="根据订单的履行状态进行筛选">Fulfillment status</Tooltip>}>
                       <Select
                         mode="multiple"
                         placeholder="Please select"
@@ -268,7 +273,7 @@ class AllOrders extends React.Component {
                     <Col span={24}>
                       <Row gutter={24}>
                         <Col span={12}>
-                          <Form.Item label="Created at or">
+                          <Form.Item label={<Tooltip title="创建时间在该时间之前/之后的订单">Created at or</Tooltip>}>
                             <InputGroup compact>
                               <Select
                                 defaultValue={this.state.created_at.name}
@@ -339,7 +344,7 @@ class AllOrders extends React.Component {
                           </Form.Item>
                         </Col>
                         <Col span={12}>
-                          <Form.Item label="Updated at or">
+                          <Form.Item label={<Tooltip title="更新时间在该时间之前/之后的订单">Updated at or</Tooltip>}>
                             <InputGroup compact>
                               <Select
                                 defaultValue={this.state.updated_at.name}
@@ -410,7 +415,7 @@ class AllOrders extends React.Component {
                           </Form.Item>
                         </Col>
                         <Col span={8}>
-                          <Form.Item label="Name like">
+                          <Form.Item label={<Tooltip title="匹配订单号前几位（带#不带都可以）">Name like</Tooltip>}>
                             <Search
                               placeholder="input search text"
                               defaultValue={filter.name}
@@ -444,7 +449,7 @@ class AllOrders extends React.Component {
                 style={{ margin: 20 }}
                 defaultValue={10}
                 onChange={
-                  (value)=>{
+                  (value) => {
                     setLimit(value);
                     getOrders();
                   }
@@ -511,7 +516,7 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'orders/setSort_r',
     payload: sort,
   }),
-  setLimit:(value) => dispatch({
+  setLimit: (value) => dispatch({
     type: 'orders/setLimit_r',
     payload: value,
   }),
