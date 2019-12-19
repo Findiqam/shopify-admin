@@ -178,6 +178,15 @@ const OrdersModel = { //orders model
                     updated_at_max: "",
                 }
             }
+        },
+        setSort_r(state, action) { //设置排序;action.payload={order,sort}
+            return {
+                ...state,
+                sort: {
+                    order: action.payload.order,
+                    sort: action.payload.sort,
+                }
+            }
         }
     }
 }
