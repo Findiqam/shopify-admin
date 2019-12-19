@@ -63,6 +63,7 @@ const OrdersModel = { //orders model
             if (orders.sort.order !== "") {
                 parameters = parameters + "order=" + orders.sort.order + " " + orders.sort.sort + "&";
             }
+
             if (orders.limit !== 0) {
                 parameters = parameters + "limit=" + orders.limit;
             }
@@ -97,6 +98,7 @@ const OrdersModel = { //orders model
                     type: 'resetFilterUpdated_r',
                 });
             }
+
             yield put({
                 type: 'setFilter_r',
                 payload: action.payload

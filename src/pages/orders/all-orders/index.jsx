@@ -102,6 +102,7 @@ class AllOrders extends React.Component {
     const fulfillmentStatus_SelectOptions = fulfillmentStatus_SelectValues.map((item) => (<Option value={item.toLowerCase()} disabled={!this.state.fulfillmentStatusOption}>{item}</Option>));
     const sort_SelectValues = ["Default", "Created date (oldest first)", "Created date (newest first)", "Updated date (oldest first)", "Updated date (newest first)"];
     const sort_SelectOptions = sort_SelectValues.map((item) => (<Option value={item.toLowerCase()}>{item}</Option>))
+
     return (
       <>
         <PageHeaderWrapper>
