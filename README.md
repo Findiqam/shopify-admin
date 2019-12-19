@@ -1,3 +1,58 @@
+# Shopify-admin
+
+## 示例
+
+[Shopify-admin](https://findiqam.github.io/shopify-admin/)
+
+## 关于
+
+这是一个基于[Ant Design Pro](https://pro.ant.design)开发的项目。
+
+### 项目成员和职责
+
+* 马淇
+    > 组长  
+    > 项目统筹、orders模块开发
+* 胡小光
+    >组员  
+    >customer模块开发
+* 刘衍
+    >组员  
+    >项目原型制作
+* 李增德
+    >组员  
+    >测试
+* 郑永斌
+    >组员  
+    >项目原型制作
+
+## 项目进度
+
+### 完成总览
+
+ - [ ] orders
+    - [ ] All orders
+    - [ ] Drafts
+    - [ ] Abandoned checkouts
+ - [ ] Products
+    - [ ] All products
+    - [ ] Transfers
+    - [ ] Inventory
+ - [ ] Customers
+    - [ ] new
+
+### 每周进度
+
+#### 第一周
+
+> 示例
+
+#### 第二周
+
+> 示例
+
+***
+
 # Ant Design Pro
 
 This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
