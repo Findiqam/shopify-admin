@@ -42,7 +42,7 @@ class AllOrders extends React.Component {
     getOrders();
   }
   render() {
-    const { ordersData, filter, nowPage, previous, next, loading, getOrders, setFilter, resetFilter, previousPage, nextPage, setSort } = this.props;
+    const { ordersData, filter, nowPage, previous, next, loading, getOrders, setFilter, resetFilter, previousPage, nextPage, setSort, setLimit } = this.props;
     const columns = [
       {
         title: 'Order',
@@ -115,19 +115,19 @@ class AllOrders extends React.Component {
                     defaultValue="default"
                     onChange={
                       (value) => {
-                        let sort={order:'',sort:''};
-                        if(value==="created date (oldest first)"){
-                          sort.order="created_at";
-                          sort.sort="asc";
-                        }else if(value==="created date (newest first)"){
-                          sort.order="created_at";
-                          sort.sort="desc";
-                        }else if(value==="updated date (oldest first)"){
-                          sort.order="updated_at";
-                          sort.sort="asc";
-                        }else if(value==="updated date (newest first)"){
-                          sort.order="updated_at";
-                          sort.sort="desc";
+                        let sort = { order: '', sort: '' };
+                        if (value === "created date (oldest first)") {
+                          sort.order = "created_at";
+                          sort.sort = "asc";
+                        } else if (value === "created date (newest first)") {
+                          sort.order = "created_at";
+                          sort.sort = "desc";
+                        } else if (value === "updated date (oldest first)") {
+                          sort.order = "updated_at";
+                          sort.sort = "asc";
+                        } else if (value === "updated date (newest first)") {
+                          sort.order = "updated_at";
+                          sort.sort = "desc";
                         }
                         setSort(sort);
                         getOrders();
@@ -439,6 +439,29 @@ class AllOrders extends React.Component {
               loading={loading}
             />
             <Row type="flex" justify="end">
+              <Select
+                style={{ margin: 20 }}
+                defaultValue={10}
+                onChange={
+                  (value)=>{
+                    setLimit(value);
+                    getOrders();
+                  }
+                }
+              >
+                <Option value={5}>
+                  5 条/页
+                </Option>
+                <Option value={10}>
+                  10 条/页
+                </Option>
+                <Option value={15}>
+                  15 条/页
+                </Option>
+                <Option value={20}>
+                  20 条/页
+                </Option>
+              </Select>
               <Button.Group style={{ margin: 20 }}>
                 <Button type="primary" disabled={previous === ''} onClick={() => previousPage()}>
                   <Icon type="left" />
@@ -448,6 +471,7 @@ class AllOrders extends React.Component {
                   <Icon type="right" />
                 </Button>
               </Button.Group>
+
             </Row>
 
           </Card>
@@ -485,6 +509,10 @@ const mapDispatchToProps = (dispatch) => ({
   setSort: (sort) => dispatch({
     type: 'orders/setSort_r',
     payload: sort,
+  }),
+  setLimit:(value) => dispatch({
+    type: 'orders/setLimit_r',
+    payload: value,
   }),
 })
 export default Form.create()(connect(mapStateToProps, mapDispatchToProps)(AllOrders));

@@ -3,7 +3,6 @@ import { getPagesUrlByLink } from '@/services/shopfiyUtils';
 
 const initialFilter = { //初始filter
     name: '',
-    limit: 10,
     created_at_min: "",
     created_at_max: "",
     updated_at_min: "",
@@ -20,6 +19,7 @@ const initialState = { //初始state
     ordersData: [],
     filter: initialFilter,
     sort: initialSort,
+    limit: 10,
     ordersCount: 0,
     pageCount: 1,
     nowPage: 1,
@@ -63,8 +63,8 @@ const OrdersModel = { //orders model
             if (orders.sort.order !== "") {
                 parameters = parameters + "order=" + orders.sort.order + " " + orders.sort.sort + "&";
             }
-            if (orders.filter.limit !== 0) {
-                parameters = parameters + "limit=" + orders.filter.limit;
+            if (orders.limit !== 0) {
+                parameters = parameters + "limit=" + orders.limit;
             }
 
             const res_orders = yield call(queryOrders, parameters); //获取在该filter下的orders响应
@@ -186,6 +186,12 @@ const OrdersModel = { //orders model
                     order: action.payload.order,
                     sort: action.payload.sort,
                 }
+            }
+        },
+        setLimit_r(state, action) { //设置每页获取的订单数
+            return {
+                ...state,
+                limit: action.payload,
             }
         }
     }
