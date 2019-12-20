@@ -53,12 +53,16 @@
 >   > 立项，分配任务，并把项目代码Shopify-admin托管至GitHub。
 >   > 完成了[All orders](https://findiqam.github.io/shopify-admin/#/orders/all-orders)
 >   > 页面的数据获取和展示以及部分的数据过滤功能。  
+
 > 刘衍:  
 >   > 完成了部分原型的制作  
+
 >胡小光:  
 >   >完成了[Customers](https://findiqam.github.io/shopify-admin/#/customers)页面的部分功能  
+
 >李增德:  
 >   >添加测试数据，测试已实现的功能  
+
 >郑永斌:  
 >   >完成了部分原型的制作  
 
@@ -67,12 +71,16 @@
 > 马淇:  
 >   > 完成了[All orders](https://findiqam.github.io/shopify-admin/#/orders/all-orders)
 >   > 页面的所有可实现数据过滤功能；实现了排序和分页,整理代码结构。  
+
 > 刘衍:  
 >   > 基本完成原型的制作  
+
 >胡小光:  
 >   >完成了[Customers](https://findiqam.github.io/shopify-admin/#/customers)页面  
+
 >李增德:  
 >   >添加测试数据，测试已实现的功能  
+
 >郑永斌:  
 >   >基本完成原型的制作  
 
