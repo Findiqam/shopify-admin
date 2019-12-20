@@ -1,9 +1,8 @@
-import { queryOrders, getOrdersCount, queryOrdersPage } from '@/services/shopify';
-import { getPagesUrlByLink } from '@/services/shopfiyUtils';
+import { queryOrders, getOrdersCount, queryOrdersPage } from './service';
+import { getPagesUrlByLink } from './util';
 
 const initialFilter = { //初始filter
     name: '',
-    limit: 10,
     created_at_min: "",
     created_at_max: "",
     updated_at_min: "",
@@ -20,17 +19,18 @@ const initialState = { //初始state
     ordersData: [],
     filter: initialFilter,
     sort: initialSort,
+    limit: 10,
     ordersCount: 0,
     pageCount: 1,
     nowPage: 1,
     previous: '',
     next: '',
 }
-const OrdersModel = { //orders model
+const Model = { //orders model
     namespace: 'orders',
     state: initialState,
     effects: {
-        *setOrders_e(action, { call, put, select }) {   //根据filter筛选orders并返回数据
+        *setOrders_e(action, { call, put, select }) {  //根据filter筛选orders并返回数据
             const { orders } = yield select();
             let parameters = "?";
             if (orders.filter.name !== "") {
@@ -63,8 +63,9 @@ const OrdersModel = { //orders model
             if (orders.sort.order !== "") {
                 parameters = parameters + "order=" + orders.sort.order + " " + orders.sort.sort + "&";
             }
-            if (orders.filter.limit !== 0) {
-                parameters = parameters + "limit=" + orders.filter.limit;
+
+            if (orders.limit !== 0) {
+                parameters = parameters + "limit=" + orders.limit;
             }
 
             const res_orders = yield call(queryOrders, parameters); //获取在该filter下的orders响应
@@ -86,7 +87,7 @@ const OrdersModel = { //orders model
                 }
             })
         },
-        *setFilter_e(action, { call, put, select }) { //设置filter
+        *setFilter_e(action, { call, put, select }) { //设置filter;action.payload={name,value}
             if (action.payload.name === "created_at_min" || action.payload.name === "created_at_max") { //如果传入的created_at相关，先重置一次created_at相关
                 yield put({
                     type: 'resetFilterCreated_r',
@@ -97,6 +98,7 @@ const OrdersModel = { //orders model
                     type: 'resetFilterUpdated_r',
                 });
             }
+
             yield put({
                 type: 'setFilter_r',
                 payload: action.payload
@@ -144,7 +146,7 @@ const OrdersModel = { //orders model
                 ...action.payload,
             }
         },
-        setFilter_r(state, action) { //设置filter
+        setFilter_r(state, action) { //设置filter;action.payload={name,value}
             return {
                 ...state,
                 filter: {
@@ -178,8 +180,23 @@ const OrdersModel = { //orders model
                     updated_at_max: "",
                 }
             }
+        },
+        setSort_r(state, action) { //设置排序;action.payload={order,sort}
+            return {
+                ...state,
+                sort: {
+                    order: action.payload.order,
+                    sort: action.payload.sort,
+                }
+            }
+        },
+        setLimit_r(state, action) { //设置每页获取的订单数
+            return {
+                ...state,
+                limit: action.payload,
+            }
         }
     }
 }
 
-export default OrdersModel;
+export default Model;

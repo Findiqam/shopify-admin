@@ -2,8 +2,10 @@
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
-import { extend } from 'umi-request';
+import axios from 'axios';
+
 import { notification } from 'antd';
+import { apiBase, access_token } from '@/services/shopConfig';
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -21,11 +23,11 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
+
 /**
  * 异常处理程序
  */
-
-const errorHandler = error => {
+axios.interceptors.response.use(response => response, (error) => {
   const { response } = error;
 
   if (response && response.status) {
@@ -43,20 +45,8 @@ const errorHandler = error => {
   }
 
   return response;
-};
-/**
- * 配置request请求时的默认参数
- */
+})
 
-const request = extend({
-  errorHandler,
-  // 默认错误处理
-  // credentials: 'include', // 默认请求是否带上cookie
-  headers: {
-    // 'Authorization': 'Basic OTlkZjE2ZjViNWI1MTkyZWVlNWQ2ZDUwY2NhMzBmZjM6YWI5ZGMwY2RmNTBjNjlkN2E3MjM5MmNhMzJjODFkMzc='
-    'X-Shopify-Access-Token': '6d699c307bc71730981e6eaedba967cd',
-    
-  },
-  getResponse:true,
-});
-export default request;
+axios.defaults.headers['X-Shopify-Access-Token'] = access_token
+
+export default axios;
