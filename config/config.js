@@ -345,12 +345,12 @@ export default {
                 {
                   name: 'Drafts',
                   path: '/orders/drafts',
-                  component: './orders/drafts',
+                  // component: './orders/drafts',
                 },
                 {
                   name: 'Abandoned checkouts',
                   path: '/orders/abandoned-checkouts',
-                  component: './orders/abandoned-checkouts',
+                  // component: './orders/abandoned-checkouts',
                 },
               ],
             },
@@ -362,7 +362,6 @@ export default {
                 {
                   name: 'All Products',
                   path: '/products/all-products',
-                  component: './products/all-products',
                 },
               ],
             },

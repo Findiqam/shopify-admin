@@ -1,5 +1,5 @@
-import { queryOrders, getOrdersCount, queryOrdersPage } from '@/services/shopify';
-import { getPagesUrlByLink } from '@/services/shopfiyUtils';
+import { queryOrders, getOrdersCount, queryOrdersPage } from './service';
+import { getPagesUrlByLink } from './util';
 
 const initialFilter = { //初始filter
     name: '',
@@ -26,11 +26,11 @@ const initialState = { //初始state
     previous: '',
     next: '',
 }
-const OrdersModel = { //orders model
+const Model = { //orders model
     namespace: 'orders',
     state: initialState,
     effects: {
-        *setOrders_e(action, { call, put, select }) {   //根据filter筛选orders并返回数据
+        *setOrders_e(action, { call, put, select }) {  //根据filter筛选orders并返回数据
             const { orders } = yield select();
             let parameters = "?";
             if (orders.filter.name !== "") {
@@ -199,4 +199,4 @@ const OrdersModel = { //orders model
     }
 }
 
-export default OrdersModel;
+export default Model;
