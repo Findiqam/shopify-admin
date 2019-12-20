@@ -1,31 +1,23 @@
-import request from '@/utils/request';
-import axios from 'axios';
-import { apiBase, access_token } from '@/services/shopConfig';
+import axios from '@/utils/request';
+import { apiBase } from '@/services/shopConfig';
 
-//根据参数筛选orders并返回结果
-export async function queryOrders(parameters) {
-    return await axios.get(apiBase + '/orders.json'+parameters,{
-        headers:{
-            'X-Shopify-Access-Token':access_token
-        }
-    })
+
+export async function queryOrders(parameters) { //根据参数筛选orders并返回结果
+    return await axios.get(apiBase + '/orders.json'+parameters)
 }
-//根据参数筛选orders并返回总数
-export async function getOrdersCount(parameters) {
-    return await axios.get(apiBase + '/orders/count.json'+parameters,{
-        headers:{
-            'X-Shopify-Access-Token':access_token
-        }
-    })
+
+export async function getOrdersCount(parameters) { //根据参数筛选orders并返回总数
+    return await axios.get(apiBase + '/orders/count.json'+parameters)
 }
-//根据url请求orders并返回
-export async function queryOrdersPage(url) {
-    return await axios.get(url,{
-        headers:{
-            'X-Shopify-Access-Token':access_token
-        }
-    })
+
+export async function queryOrdersPage(url) { //根据url请求orders并返回
+    return await axios.get(url)
 }
+
+export async function queryDraftOrders(parameters) { //根据参数筛选draft_orders并返回
+    return await axios.get(apiBase + '/draft_orders.json'+parameters)
+}
+
 export async function queryAllCustomers() {
     return request(apiBase + '/customers.json');
 }

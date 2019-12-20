@@ -14,6 +14,8 @@ import {
 } from 'antd';
 import moment, { months } from 'moment';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import maqiPagination from '@/pages/orders/components/maqiPagination';
+
 const { Search } = Input;
 const InputGroup = Input.Group;
 const { Option } = Select;
@@ -159,7 +161,7 @@ class AllOrders extends React.Component {
                       All reset
                     </Button>
                   </Tooltip>
-                  <Tooltip title={this.state.moreFilter?"关闭更多过滤并重置更多过滤中的过滤选项":"更多过滤器"}>
+                  <Tooltip title={this.state.moreFilter ? "关闭更多过滤并重置更多过滤中的过滤选项" : "更多过滤器"}>
                     <Button
                       size="small"
                       onClick={
@@ -444,7 +446,23 @@ class AllOrders extends React.Component {
               pagination={false}
               loading={loading}
             />
-            <Row type="flex" justify="end">
+            <maqiPagination
+              showSizeDefault={10}
+              showSizeSelect={[5, 10, 15, 20]}
+              onShowSizeChange={
+                (value) => {
+                  setLimit(value);
+                  getOrders();
+                }
+              }
+              nowPage={nowPage}
+              previousPage={previousPage}
+              nextPage={nextPage}
+              previousDisabled={previous === ''}
+              nextDisabled={next === ''}
+            >
+            </maqiPagination>
+            {/* <Row type="flex" justify="end">
               <Select
                 style={{ margin: 20 }}
                 defaultValue={10}
@@ -477,9 +495,8 @@ class AllOrders extends React.Component {
                   <Icon type="right" />
                 </Button>
               </Button.Group>
-
-            </Row>
-
+            </Row> */}
+            
           </Card>
 
         </PageHeaderWrapper>
