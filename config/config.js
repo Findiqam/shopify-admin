@@ -336,7 +336,7 @@ export default {
               name: 'Orders',
               icon: 'file-text',
               path: '/orders',
-              routes:[
+              routes: [
                 {
                   name: 'All orders',
                   path: '/orders/all-orders',
@@ -358,7 +358,7 @@ export default {
               name: 'Products',
               icon: 'gift',
               path: '/products',
-              routes:[
+              routes: [
                 {
                   name: 'All Products',
                   path: '/products/all-products',
@@ -366,9 +366,24 @@ export default {
               ],
             },
             {
-              name: 'Customers',
-              icon: 'team',
               path: '/customers',
+              name: 'customers',
+              icon: 'user',
+              hideChildrenInMenu: true,
+              routes: [
+                {
+                  name: 'allcustomers',
+                  icon: 'user',
+                  path: '/customers',
+                  component: './customers',
+                },
+                {
+                  name: 'Addcustomers',
+                  icon: 'smile',
+                  path: '/customers/Addcustomers',
+                  component: './customers/addcustomers',
+                },
+              ],
             },
             {
               component: '404',
