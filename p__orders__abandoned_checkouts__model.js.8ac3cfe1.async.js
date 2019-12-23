@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[9],{"8jbp":function(e,a,s){"use strict";Object.defineProperty(a,"__esModule",{value:!0}),a.default=void 0;var t={namespace:"abandonedcheckouts",state:{},effects:{},reducers:{}},c=t;a.default=c}}]);
