@@ -17,13 +17,14 @@ const { Search } = Input;
 const InputGroup = Input.Group;
 const { Option } = Select;
 
-const mapStateToProps = ({ orders }) => ({
+const mapStateToProps = ({ orders, loading }) => ({
     filter: orders.filter,
+    // loading: loading.models["orders"],
 })
 const mapDispatchToProps = (dispatch) => ({
     getOrders: () => dispatch({
         type: 'orders/setOrders_e'
-      }),
+    }),
     setFilter: (filter) => dispatch({
         type: 'orders/setFilter_e',
         payload: filter
@@ -56,7 +57,7 @@ export default class OrdersFilterAndSort extends React.Component {
         moreFilter: false,//是否展示更多过滤器
     }
     render() {
-        const { filter, getOrders, setFilter, resetFilter, setSort, } = this.props;
+        const { filter, loading, getOrders, setFilter, resetFilter, setSort, } = this.props;
         const status_SelectValues = ["Any", "Open", "Closed", "Cancelled"];
         const status_SelectOptions = status_SelectValues.map((item) => (<Option value={item.toLowerCase()}>{item}</Option>));
         const paymentStatus_SelectValues = ["Authorized", "Paid", "Pending", "Partially_paid", "Refunded", "Voided", "Partially_refunded", "Unpaid"];
@@ -68,6 +69,9 @@ export default class OrdersFilterAndSort extends React.Component {
 
         return (
             <Card
+                // loading={loading}
+                bodyStyle={{paddingBottom:0}}
+                bordered={false}
                 title={
                     <>Filter and sort by
                   <Select
