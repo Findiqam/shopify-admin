@@ -19,7 +19,7 @@ const initialState = { //初始state
     ordersData: [],
     filter: initialFilter,
     sort: initialSort,
-    limit: 10,
+    limit: 5,
     ordersCount: 0,
     pageCount: 1,
     nowPage: 1,

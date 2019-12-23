@@ -1,9 +1,12 @@
 import { connect } from 'dva';
 import {
-  Table,
   Card
 } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import DraftsFilter from './components/DraftsFilter';
+import DraftsTable from './components/DraftsTable';
+import DraftsPagination from './components/DraftsPagination';
+
 class Drafts extends React.Component {
   
   render() {
@@ -12,6 +15,9 @@ class Drafts extends React.Component {
       <>
         <PageHeaderWrapper>
           <Card>
+            <DraftsFilter/>
+            <DraftsTable/>
+            <DraftsPagination/>
           </Card>
         </PageHeaderWrapper>
       </>
@@ -19,4 +25,4 @@ class Drafts extends React.Component {
   }
 }
 
-export default connect( )(Drafts);
+export default connect()(Drafts);
