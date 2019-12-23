@@ -1,6 +1,10 @@
 import { connect } from 'dva';
 import {
     Table,
+    Row, Col,
+    Button,
+    Icon,
+    Card,
 } from 'antd';
 import moment from 'moment';
 const mapStateToProps = ({ orders, loading }) => ({
@@ -25,6 +29,7 @@ export default class OrdersTable extends React.Component {
                 title: 'Order',
                 dataIndex: 'name',
                 key: 'name',
+            render: (name,record) => (<Button type="link" onClick={()=>{location.hash="/orders/all_orders/order_details"}}>{name}</Button>)
             },
             {
                 title: 'Date',
@@ -72,13 +77,30 @@ export default class OrdersTable extends React.Component {
             }),
         };
         return (
-            <Table
-                columns={columns}
-                dataSource={ordersData}
-                rowSelection={rowSelection}
-                pagination={false}
-                loading={loading}
-            />
+            <>
+                <Row type="flex" justify="end" style={{ marginBottom: 16 }}>
+                    <Col span={3} style={{ marginRight: 24 }}>
+                        <Button
+                            type="primary"
+                            block
+                            onClick={
+                                () => {
+                                    location.hash = "/orders/draft_orders/new"
+                                }
+                            }
+                        >
+                            New order <Icon type="plus"></Icon>
+                        </Button>
+                    </Col>
+                </Row>
+                <Table
+                    columns={columns}
+                    dataSource={ordersData}
+                    rowSelection={rowSelection}
+                    pagination={false}
+                    loading={loading}
+                />
+            </>
         );
     }
 }
