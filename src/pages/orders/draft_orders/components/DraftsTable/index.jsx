@@ -7,39 +7,35 @@ import {
     Card,
 } from 'antd';
 import moment from 'moment';
-const mapStateToProps = ({ orders, loading }) => ({
-    ordersData: orders.ordersData,
-    loading: loading.models["orders"],
+const mapStateToProps = ({ drafts, loading }) => ({
+    draftsData: drafts.draftsData,
+    loading: loading.models["drafts"],
 })
 const mapDispatchToProps = (dispatch) => ({
-    getOrders: () => dispatch({
-        type: 'orders/setOrders_e'
+    getDrafts: () => dispatch({
+        type: 'drafts/setDrafts_e'
     }),
 })
 @connect(mapStateToProps, mapDispatchToProps)
-export default class OrdersTable extends React.Component {
+export default class DraftsTable extends React.Component {
     componentDidMount() {
-        const { getOrders } = this.props;
-        getOrders();
+        const { getDrafts } = this.props;
+        getDrafts();
     }
     render() {
-        const { ordersData, loading, } = this.props;
+        const { draftsData, loading, } = this.props;
         const columns = [
             {
-                title: 'Order',
+                title: 'Draft',
                 dataIndex: 'name',
                 key: 'name',
-<<<<<<< HEAD:src/pages/orders/all_orders/components/OrdersTable/index.js
-            render: (name,record) => (<Button type="link" onClick={()=>{location.hash="/orders/all_orders/order_details"}}>{name}</Button>)
-=======
-            render: (name,record) => (<Button type="link" size="small" onClick={()=>{location.hash="/orders/all_orders/order_details"}}>{name}</Button>)
->>>>>>> develop:src/pages/orders/all_orders/components/OrdersTable/index.jsx
+                render: (name, record) => (<Button type="link" size="small" onClick={() => { location.hash = "/orders/draft_orders/draft_order_details" }}>{name}</Button>)
             },
             {
                 title: 'Date',
-                dataIndex: 'created_at',
-                key: 'created_at',
-                render: created_at => (moment(created_at).format("YYYY-MM-DD HH:mm:ss"))
+                dataIndex: 'updated_at',
+                key: 'updated_at',
+                render: updated_at => (moment(updated_at).format("YYYY-MM-DD HH:mm:ss"))
             },
             {
                 title: 'Customer',
@@ -48,28 +44,15 @@ export default class OrdersTable extends React.Component {
                 render: customer => (customer ? customer.first_name + " " + customer.last_name : "没有客户"),
             },
             {
-                title: 'Payment',
-                dataIndex: 'financial_status',
-                key: 'financial_status',
-            },
-            {
-                title: 'Fulfillment',
-                dataIndex: 'fulfillment_status',
-                key: 'fulfillment_status',
-                render: fulfillment_status => {
-                    if (fulfillment_status === null) {
-                        return 'Unfulfilled'
-                    }
-                    else {
-                        return fulfillment_status
-                    }
-                },
+                title: 'Status',
+                dataIndex: 'status',
+                key: 'status',
             },
             {
                 title: 'Total',
-                dataIndex: 'total_line_items_price',
-                key: 'total_line_items_price',
-                render: total_line_items_price => ('$' + total_line_items_price)
+                dataIndex: 'subtotal_price',
+                key: 'subtotal_price',
+                render: subtotal_price => ('$' + subtotal_price)
             },
         ];
         const rowSelection = {
@@ -99,12 +82,12 @@ export default class OrdersTable extends React.Component {
                 </Row>
                 <Table
                     columns={columns}
-                    dataSource={ordersData}
+                    dataSource={draftsData}
                     rowSelection={rowSelection}
                     pagination={false}
                     loading={loading}
                 />
             </>
-        );
+        )
     }
 }

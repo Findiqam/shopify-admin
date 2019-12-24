@@ -79,68 +79,68 @@ export default {
       path: '/',
       component: '../layouts/BlankLayout',
       routes: [
-        {
-          path: '/user',
-          component: '../layouts/UserLayout',
-          routes: [
-            {
-              path: '/user',
-              redirect: '/user/login',
-            },
-            {
-              name: 'login',
-              icon: 'smile',
-              path: '/user/login',
-              component: './user/login',
-            },
-            {
-              name: 'register-result',
-              icon: 'smile',
-              path: '/user/register-result',
-              component: './user/register-result',
-            },
-            {
-              name: 'register',
-              icon: 'smile',
-              path: '/user/register',
-              component: './user/register',
-            },
-            {
-              component: '404',
-            },
-          ],
-        },
+        // {
+        //   path: '/user',
+        //   component: '../layouts/UserLayout',
+        //   routes: [
+        //     {
+        //       path: '/user',
+        //       redirect: '/user/login',
+        //     },
+        //     {
+        //       name: 'login',
+        //       icon: 'smile',
+        //       path: '/user/login',
+        //       component: './user/login',
+        //     },
+        //     {
+        //       name: 'register-result',
+        //       icon: 'smile',
+        //       path: '/user/register-result',
+        //       component: './user/register-result',
+        //     },
+        //     {
+        //       name: 'register',
+        //       icon: 'smile',
+        //       path: '/user/register',
+        //       component: './user/register',
+        //     },
+        //     {
+        //       component: '404',
+        //     },
+        //   ],
+        // },
         {
           path: '/',
           component: '../layouts/BasicLayout',
           Routes: ['src/pages/Authorized'],
           authority: ['admin', 'user'],
           routes: [
-            {
-              path: '/dashboard',
-              name: 'dashboard',
-              icon: 'dashboard',
-              routes: [
-                {
-                  name: 'analysis',
-                  icon: 'smile',
-                  path: '/dashboard/analysis',
-                  component: './dashboard/analysis',
-                },
-                {
-                  name: 'monitor',
-                  icon: 'smile',
-                  path: '/dashboard/monitor',
-                  component: './dashboard/monitor',
-                },
-                {
-                  name: 'workplace',
-                  icon: 'smile',
-                  path: '/dashboard/workplace',
-                  component: './dashboard/workplace',
-                },
-              ],
-            },
+            // {
+            //   path: '/dashboard',
+            //   name: 'dashboard',
+            //   icon: 'dashboard',
+            //   routes: [
+            //     {
+            //       name: 'analysis',
+            //       icon: 'smile',
+            //       path: '/dashboard/analysis',
+            //       component: './dashboard/analysis',
+            //     },
+            //     {
+            //       name: 'monitor',
+            //       icon: 'smile',
+            //       path: '/dashboard/monitor',
+            //       component: './dashboard/monitor',
+            //     },
+            //     {
+            //       name: 'workplace',
+            //       icon: 'smile',
+            //       path: '/dashboard/workplace',
+            //       component: './dashboard/workplace',
+            //     },
+            //   ],
+            // },
             // {
             //   path: '/form',
             //   icon: 'form',
@@ -332,6 +332,10 @@ export default {
             //   redirect: '/dashboard/analysis',
             //   // authority: ['admin', 'user'],
             // },
+            {
+              path: '/',
+              redirect:'/orders/all_orders',
+            },
             {
               name: 'Orders',
               icon: 'file-text',
