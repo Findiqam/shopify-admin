@@ -29,11 +29,7 @@ export default class OrdersTable extends React.Component {
                 title: 'Order',
                 dataIndex: 'name',
                 key: 'name',
-<<<<<<< HEAD:src/pages/orders/all_orders/components/OrdersTable/index.js
-            render: (name,record) => (<Button type="link" onClick={()=>{location.hash="/orders/all_orders/order_details"}}>{name}</Button>)
-=======
             render: (name,record) => (<Button type="link" size="small" onClick={()=>{location.hash="/orders/all_orders/order_details"}}>{name}</Button>)
->>>>>>> develop:src/pages/orders/all_orders/components/OrdersTable/index.jsx
             },
             {
                 title: 'Date',
