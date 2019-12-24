@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[12],{"17IR":function(e,s,t){"use strict";Object.defineProperty(s,"__esModule",{value:!0}),s.default=void 0;var a={namespace:"drafts",state:{},effects:{},reducers:{}},d=a;s.default=d}}]);
