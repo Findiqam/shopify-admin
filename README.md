@@ -30,6 +30,8 @@
 
 ### 完成总览
 
+#### 代码进度树状图
+
  - [ ] orders
     - [x] All orders
     - [ ] Order details
@@ -44,6 +46,8 @@
  - [ ] Customers
     - [x] All customers
     - [ ] new
+
+#### 个人任务完成进度总览
 
 > 马淇:  
 >   > 完成了[All orders](https://findiqam.github.io/shopify-admin/#/orders/all-orders)、
