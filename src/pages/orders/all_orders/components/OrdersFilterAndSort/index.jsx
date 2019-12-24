@@ -120,7 +120,7 @@ export default class OrdersFilterAndSort extends React.Component {
                                 }
                             >
                                 All reset
-                    </Button>
+                            </Button>
                         </Tooltip>
                         <Tooltip title={this.state.moreFilter ? "关闭更多过滤并重置更多过滤中的过滤选项" : "更多过滤器"}>
                             <Button
