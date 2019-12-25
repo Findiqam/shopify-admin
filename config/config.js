@@ -337,12 +337,12 @@ export default {
               redirect:'/orders/all_orders',
             },
             {
-              name: 'Orders',
+              name: 'orders',
               icon: 'file-text',
               path: '/orders',
               routes: [
                 {
-                  name: 'All orders',
+                  name: 'all-orders',
                   path: '/orders/all_orders',
                   routes: [
                     {
@@ -350,7 +350,7 @@ export default {
                       component: './orders/all_orders',
                     },
                     {
-                      name: 'Order details',
+                      name: 'order-details',
                       path: '/orders/all_orders/order_details',
                       hideInMenu: true,
                       component: './orders/all_orders/order_details',
@@ -358,7 +358,7 @@ export default {
                   ]
                 },
                 {
-                  name: 'Drafts',
+                  name: 'drafts',
                   path: '/orders/draft_orders',
                   routes: [
                     {
@@ -366,13 +366,13 @@ export default {
                       component: './orders/draft_orders',
                     },
                     {
-                      name:'Draft order details',
+                      name:'draft-order-details',
                       path: '/orders/draft_orders/draft_order_details',
                       hideInMenu: true,
                       component: './orders/draft_orders/draft_order_details',
                     },
                     {
-                      name:'New draft order',
+                      name:'new-draft-order',
                       path: '/orders/draft_orders/new',
                       hideInMenu: true,
                       component: './orders/draft_orders/new',
@@ -380,19 +380,19 @@ export default {
                   ]
                 },
                 {
-                  name: 'Abandoned checkouts',
+                  name: 'abandoned-checkouts',
                   path: '/orders/abandoned_checkouts',
                   component: './orders/abandoned_checkouts',
                 },
               ],
             },
             {
-              name: 'Products',
+              name: 'products',
               icon: 'gift',
               path: '/products',
               routes: [
                 {
-                  name: 'All Products',
+                  name: 'all-products',
                   path: '/products/all-products',
                 },
               ],
@@ -404,13 +404,13 @@ export default {
               hideChildrenInMenu: true,
               routes: [
                 {
-                  name: 'allcustomers',
+                  name: 'all-customers',
                   icon: 'user',
                   path: '/customers',
                   component: './customers',
                 },
                 {
-                  name: 'Addcustomers',
+                  name: 'add-customers',
                   icon: 'smile',
                   path: '/customers/Addcustomers',
                   component: './customers/addcustomers',

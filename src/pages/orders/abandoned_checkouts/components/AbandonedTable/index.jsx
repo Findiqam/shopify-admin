@@ -76,6 +76,7 @@ export default class AbandonedTable extends React.Component {
                     columns={columns}
                     dataSource={tableData}
                     rowSelection={rowSelection}
+                    rowKey={record => record.id}
                     pagination={false}
                     loading={loading}
                 />
