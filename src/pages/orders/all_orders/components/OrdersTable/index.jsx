@@ -133,6 +133,7 @@ export default class OrdersTable extends React.Component {
                     columns={columns}
                     dataSource={tableData}
                     rowSelection={rowSelection}
+                    rowKey={record => record.id}
                     pagination={false}
                     loading={loading}
                     onChange={

@@ -60,11 +60,11 @@ export default class OrdersFilterAndSort extends React.Component {
     render() {
         const { filter, sort, loading, getTableData, setFilter, resetFilter, setSort, } = this.props;
         const status_SelectValues = ["Any", "Open", "Closed", "Cancelled"];
-        const status_SelectOptions = status_SelectValues.map((item) => (<Option value={item.toLowerCase()}>{item}</Option>));
+        const status_SelectOptions = status_SelectValues.map((item, key) => (<Option value={item.toLowerCase()} key={key}>{item}</Option>));
         const paymentStatus_SelectValues = ["Authorized", "Paid", "Pending", "Partially_paid", "Refunded", "Voided", "Partially_refunded", "Unpaid"];
-        const paymentStatus_SelectOptions = paymentStatus_SelectValues.map((item) => (<Option value={item.toLowerCase()} disabled={!this.state.paymentStatusOption}>{item}</Option>));
+        const paymentStatus_SelectOptions = paymentStatus_SelectValues.map((item, key) => (<Option value={item.toLowerCase()} key={key} disabled={!this.state.paymentStatusOption}>{item}</Option>));
         const fulfillmentStatus_SelectValues = ["Shipped", "Partial", "Unshipped", "Unfulfilled"];
-        const fulfillmentStatus_SelectOptions = fulfillmentStatus_SelectValues.map((item) => (<Option value={item.toLowerCase()} disabled={!this.state.fulfillmentStatusOption}>{item}</Option>));
+        const fulfillmentStatus_SelectOptions = fulfillmentStatus_SelectValues.map((item, key) => (<Option value={item.toLowerCase()} key={key} disabled={!this.state.fulfillmentStatusOption}>{item}</Option>));
         // const sort_SelectValues = ["Default", "Created date (oldest first)", "Created date (newest first)", "Updated date (oldest first)", "Updated date (newest first)"];
         // const sort_SelectOptions = sort_SelectValues.map((item) => (<Option value={item.toLowerCase()}>{item}</Option>))
 

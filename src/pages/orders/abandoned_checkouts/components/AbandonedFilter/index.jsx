@@ -120,7 +120,7 @@ class AbandonedFilter extends React.Component {
         const { filter, loading, getTableData, setFilter, resetFilter, } = this.props;
         const { getFieldDecorator, getFieldValue, resetFields, } = this.props.form;
         const status_SelectValues = ["open", "closed",];
-        const status_SelectOptions = status_SelectValues.map((item) => (<Option value={item.toLowerCase()}>{item}</Option>));
+        const status_SelectOptions = status_SelectValues.map((item, key) => (<Option value={item.toLowerCase()} key={key}>{item}</Option>));
 
         return (
             <Card

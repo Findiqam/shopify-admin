@@ -17,7 +17,7 @@ export class MaqiPagination extends React.Component {
         //previousDisabled:上一页是否可以点击
         //nextDisabled:下一页是否可以点击
         const { showSizeDefault, showSizeSelect, onShowSizeChange, nowPage, previousPage, nextPage, previousDisabled, nextDisabled } = this.props;
-        const showSizeSelectOption = showSizeSelect.map((item) => (<Option value={item}>{item} 条/页</Option>))
+        const showSizeSelectOption = showSizeSelect.map((item, key) => (<Option value={item} key={key}>{item} 条/页</Option>))
         return (
             <Row type="flex" justify="end">
                 <Select
