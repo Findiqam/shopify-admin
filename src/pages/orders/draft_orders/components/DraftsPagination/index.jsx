@@ -2,7 +2,7 @@ import { connect } from 'dva';
 import { MaqiPagination } from '@/pages/orders/components';
 
 const mapStateToProps = ({ drafts, loading }) => ({
-    draftsData: drafts.draftsData,
+    tableData: drafts.tableData,
     pageSize: drafts.limit,
     nowPage: drafts.nowPage,
     previous: drafts.previous,
@@ -10,8 +10,8 @@ const mapStateToProps = ({ drafts, loading }) => ({
     loading: loading.models["drafts"],
 })
 const mapDispatchToProps = (dispatch) => ({
-    getDrafts: () => dispatch({
-        type: 'drafts/setDrafts_e'
+    getTableData: () => dispatch({
+        type: 'drafts/setTableData_e'
     }),
     previousPage: () => dispatch({
         type: 'drafts/previousPage_e'
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
 @connect(mapStateToProps, mapDispatchToProps)
 export default class DraftsPagination extends React.Component {
     render() {
-        const { pageSize, nowPage, previous, next, getDrafts, previousPage, nextPage, setLimit } = this.props;
+        const { pageSize, nowPage, previous, next, getTableData, previousPage, nextPage, setLimit } = this.props;
         return (
             <MaqiPagination
                 showSizeDefault={pageSize}
@@ -35,7 +35,7 @@ export default class DraftsPagination extends React.Component {
                 onShowSizeChange={
                     (value) => {
                         setLimit(value);
-                        getDrafts();
+                        getTableData();
                     }
                 }
                 nowPage={nowPage}

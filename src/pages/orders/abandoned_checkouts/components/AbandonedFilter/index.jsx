@@ -19,7 +19,7 @@ const { Option } = Select;
 
 class DateTimeAt extends React.Component {
     render() {
-        const { onChange, value, screenOnClick } = this.props;
+        const { onChange, value, screenOnClick, } = this.props;
         return (
             <InputGroup compact>
                 <Select
@@ -98,28 +98,28 @@ class DateTimeAt extends React.Component {
 
 
 
-const mapStateToProps = ({ drafts, loading }) => ({
-    filter: drafts.filter,
-    // loading: loading.models["drafts"],
+const mapStateToProps = ({ abandonedcheckouts, loading }) => ({
+    filter: abandonedcheckouts.filter,
+    // loading: loading.models["abandonedcheckouts"],
 })
 const mapDispatchToProps = (dispatch) => ({
     getTableData: () => dispatch({
-        type: 'drafts/setTableData_e'
+        type: 'abandonedcheckouts/setTableData_e'
     }),
     setFilter: (filter) => dispatch({
-        type: 'drafts/setFilter_e',
+        type: 'abandonedcheckouts/setFilter_e',
         payload: filter
     }),
     resetFilter: () => dispatch({
-        type: 'drafts/resetFilter_r'
+        type: 'abandonedcheckouts/resetFilter_r'
     }),
 })
 @connect(mapStateToProps, mapDispatchToProps)
-class DraftsFilter extends React.Component {
+class AbandonedFilter extends React.Component {
     render() {
         const { filter, loading, getTableData, setFilter, resetFilter, } = this.props;
         const { getFieldDecorator, getFieldValue, resetFields, } = this.props.form;
-        const status_SelectValues = ["open", "invoice_sent", "completed"];
+        const status_SelectValues = ["open", "closed",];
         const status_SelectOptions = status_SelectValues.map((item) => (<Option value={item.toLowerCase()}>{item}</Option>));
 
         return (
@@ -145,8 +145,8 @@ class DraftsFilter extends React.Component {
                 }
             >
                 <Form layout="vertical">
-                    <Row gutter={24}>
-                        <Col span={8}>
+                    <Row gutter={8}>
+                        <Col span={4}>
                             <Form.Item label={<Tooltip title="根据订单的状态进行筛选">Status</Tooltip>}>
                                 <Select
                                     defaultValue="open"
@@ -162,7 +162,38 @@ class DraftsFilter extends React.Component {
                                 </Select>
                             </Form.Item>
                         </Col>
-                        <Col span={16}>
+                        <Col span={10}>
+                            <Form.Item label={<Tooltip title="创建时间在该时间之前/之后的订单">Created at or</Tooltip>}>
+                                {
+                                    getFieldDecorator(
+                                        'created_at',
+                                        {
+                                            initialValue: {
+                                                name: '_min',
+                                                udate: "",
+                                                utime: moment("00:00:00", "hh:mm:ss"),
+                                            }
+                                        }
+                                    )(
+                                        <DateTimeAt screenOnClick={
+                                            () => {
+                                                const created_at = getFieldValue('created_at');
+                                                const created_at_date = moment(created_at.udate).format("YYYY-MM-DD");
+                                                const created_at_time = moment(created_at.utime).format("hh:mm:ss");
+                                                let created_at_value = moment(created_at_date + " " + created_at_time).format();
+                                                if (created_at_value === "Invalid date") {
+                                                    created_at_value = '';
+                                                }
+                                                setFilter({ name: 'created_at' + created_at.name, value: created_at_value });
+                                                getTableData();
+                                            }
+                                        }
+                                        />
+                                    )
+                                }
+                            </Form.Item>
+                        </Col>
+                        <Col span={10}>
                             <Form.Item label={<Tooltip title="更新时间在该时间之前/之后的订单">Updated at or</Tooltip>}>
                                 {
                                     getFieldDecorator(
@@ -199,4 +230,4 @@ class DraftsFilter extends React.Component {
         )
     }
 }
-export default Form.create()(DraftsFilter);
+export default Form.create()(AbandonedFilter);

@@ -38,7 +38,7 @@
     - [x] Drafts
     - [ ] Drafts_orders details
     - [ ] Create Drafts_orders
-    - [ ] Abandoned checkouts
+    - [x] Abandoned checkouts
  - [ ] Products
     - [ ] All products
     - [ ] Transfers
@@ -50,8 +50,11 @@
 #### 个人任务完成进度总览
 
 > 马淇:  
->   > 完成了[All orders](https://findiqam.github.io/shopify-admin/#/orders/all-orders)、
->   > [Drafts](https://findiqam.github.io/shopify-admin/#/orders/draft_orders)页面。  
+>   > 完成了
+>   > [Drafts](https://findiqam.github.io/shopify-admin/#/orders/draft_orders)、
+>   > [All orders](https://findiqam.github.io/shopify-admin/#/orders/all-orders)、
+>   > [Abandoned checkouts](https://findiqam.github.io/shopify-admin/#/orders/abandoned_checkouts)、
+>   > 页面。  
 
 > 刘衍:  
 >   > 原型制作([原型地址](https://46t539.axshare.com))  
@@ -70,8 +73,12 @@
 #### 第三周
 
 > 马淇:  
->   > 完成了[Drafts](https://findiqam.github.io/shopify-admin/#/orders/draft_orders)
->   > 页面的所有可实现数据过滤功能；实现了排序和分页,整理代码结构。  
+>   > 2019-12-25>>完成了[Abandoned checkouts](https://findiqam.github.io/shopify-admin/#/orders/abandoned_checkouts)
+>   > 页面的实现数据过滤功能、分页功能，
+>   > 调整之前写过的代码，增强了代码复用性，加快类似页面的开发。  
+>   > 2019-12-24>>完成了[Drafts](https://findiqam.github.io/shopify-admin/#/orders/draft_orders)
+>   > 页面的可实现数据过滤功能、分页功能,整理代码结构。为[All orders](https://findiqam.github.io/shopify-admin/#/orders/all-orders)
+>   > 页面添加了部分字段的表头排序、筛选功能。新添加的排序和筛选可与之前的过滤排序器同步。  
 
 > 刘衍:  
 >   > 基本完成原型的制作([原型地址](https://46t539.axshare.com))  

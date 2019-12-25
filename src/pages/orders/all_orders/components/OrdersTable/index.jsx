@@ -8,38 +8,66 @@ import {
 } from 'antd';
 import moment from 'moment';
 const mapStateToProps = ({ orders, loading }) => ({
-    ordersData: orders.ordersData,
+    tableData: orders.tableData,
     loading: loading.models["orders"],
+    sort: orders.sort,
+    filter: orders.filter,
 })
 const mapDispatchToProps = (dispatch) => ({
-    getOrders: () => dispatch({
-        type: 'orders/setOrders_e'
+    getTableData: () => dispatch({
+        type: 'orders/setTableData_e'
+    }),
+    setSort: (sort) => dispatch({
+        type: 'orders/setSort_r',
+        payload: sort,
+    }),
+    setFilter: (filter) => dispatch({
+        type: 'orders/setFilter_e',
+        payload: filter
     }),
 })
 @connect(mapStateToProps, mapDispatchToProps)
 export default class OrdersTable extends React.Component {
     componentDidMount() {
-        const { getOrders } = this.props;
-        getOrders();
+        const { getTableData } = this.props;
+        getTableData();
     }
     render() {
-        const { ordersData, loading, } = this.props;
+        const { tableData, loading, sort, filter, setSort, getTableData, setFilter } = this.props;
+        const paymentStatus_SelectValues = ["Authorized", "Paid", "Pending", "Partially_paid", "Refunded", "Voided", "Partially_refunded", "Unpaid"];
+        const paymentStatus_SelectOptions = paymentStatus_SelectValues.map((item) => ({ text: item, value: item.toLowerCase() }));
+
+        const fulfillmentStatus_SelectValues = ["Shipped", "Partial", "Unshipped", "Unfulfilled"];
+        const fulfillmentStatus_SelectOptions = fulfillmentStatus_SelectValues.map((item) => ({ text: item, value: item.toLowerCase() }));
+
+        let datesort = false;
+        if (sort.order === 'created_at') {
+            if (sort.sort === 'asc') {
+                datesort = 'ascend';
+            } else {
+                datesort = 'descend';
+            }
+        }
+
+        // let fulfillmentStatus_filtered = false;
+        // console.log(filter.fulfillment_status)
+        // if (filter.fulfillment_status.length !== 0) {
+        //     fulfillmentStatus_filtered = true;
+        // }
         const columns = [
             {
                 title: 'Order',
                 dataIndex: 'name',
                 key: 'name',
-<<<<<<< HEAD:src/pages/orders/all_orders/components/OrdersTable/index.js
-            render: (name,record) => (<Button type="link" onClick={()=>{location.hash="/orders/all_orders/order_details"}}>{name}</Button>)
-=======
-            render: (name,record) => (<Button type="link" size="small" onClick={()=>{location.hash="/orders/all_orders/order_details"}}>{name}</Button>)
->>>>>>> develop:src/pages/orders/all_orders/components/OrdersTable/index.jsx
+                render: (name, record) => (<Button type="link" size="small" onClick={() => { location.hash = "/orders/all_orders/order_details" }}>{name}</Button>)
             },
             {
                 title: 'Date',
                 dataIndex: 'created_at',
                 key: 'created_at',
-                render: created_at => (moment(created_at).format("YYYY-MM-DD HH:mm:ss"))
+                sorter: true,
+                sortOrder: datesort,
+                render: created_at => (moment(created_at).format("YYYY-MM-DD HH:mm:ss")),
             },
             {
                 title: 'Customer',
@@ -51,11 +79,15 @@ export default class OrdersTable extends React.Component {
                 title: 'Payment',
                 dataIndex: 'financial_status',
                 key: 'financial_status',
+                filters: paymentStatus_SelectOptions,
+                filteredValue: filter.financial_status,
             },
             {
                 title: 'Fulfillment',
                 dataIndex: 'fulfillment_status',
                 key: 'fulfillment_status',
+                filters: fulfillmentStatus_SelectOptions,
+                filteredValue: filter.fulfillment_status,
                 render: fulfillment_status => {
                     if (fulfillment_status === null) {
                         return 'Unfulfilled'
@@ -99,10 +131,30 @@ export default class OrdersTable extends React.Component {
                 </Row>
                 <Table
                     columns={columns}
-                    dataSource={ordersData}
+                    dataSource={tableData}
                     rowSelection={rowSelection}
                     pagination={false}
                     loading={loading}
+                    onChange={
+                        (pagination, filters, sorter) => {
+                            console.log(filters, sorter)
+                            if (sorter) {
+                                let closeSort = { order: '', sort: '' };
+                                if (sorter.order) {
+                                    closeSort = { order: sorter.field, sort: '' };
+                                }
+                                if (sorter.order === "ascend") {
+                                    closeSort.sort = 'asc';
+                                } else if (sorter.order === "descend") {
+                                    closeSort.sort = 'desc';
+                                }
+                                setSort(closeSort);
+                            }
+                            setFilter({ name: 'financial_status', value: filters.financial_status });
+                            setFilter({ name: 'fulfillment_status', value: filters.fulfillment_status });
+                            getTableData();
+                        }
+                    }
                 />
             </>
         );
