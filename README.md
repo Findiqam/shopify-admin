@@ -75,7 +75,7 @@
 > 马淇:  
 >   > 2019-12-25>>完成了[Abandoned checkouts](https://findiqam.github.io/shopify-admin/#/orders/abandoned_checkouts)
 >   > 页面的实现数据过滤功能、分页功能，
->   > 调整之前写过的代码，增强了代码复用性，加快类似页面的开发。  
+>   > 调整之前写过的代码，增强了代码复用性，加快类似页面的开发。添加了左菜单栏的简体中文和English两种语言的国际化。  
 >   > 2019-12-24>>完成了[Drafts](https://findiqam.github.io/shopify-admin/#/orders/draft_orders)
 >   > 页面的可实现数据过滤功能、分页功能,整理代码结构。为[All orders](https://findiqam.github.io/shopify-admin/#/orders/all-orders)
 >   > 页面添加了部分字段的表头排序、筛选功能。新添加的排序和筛选可与之前的过滤排序器同步。  
