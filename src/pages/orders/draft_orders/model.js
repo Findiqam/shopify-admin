@@ -1,12 +1,12 @@
 import { getPagesUrlByLink } from './util';
-import { queryDraftOrders, queryDraftsPage } from './service';
+import { queryTableData, queryTableDataPage } from './service';
 const initialFilter = { //初始filter
     updated_at_min: "",
     updated_at_max: "",
     status: 'open',
 };
 const initialState = {
-    draftsData: [],
+    tableData: [],
     filter: initialFilter,
     limit: 5,
     nowPage: 1,
@@ -17,7 +17,7 @@ const Model = {
     namespace: 'drafts',
     state: initialState,
     effects: {
-        *setDrafts_e(action, { call, put, select }) { //根据filter筛选drafts并返回数据
+        *setTableData_e(action, { call, put, select }) { //根据filter筛选drafts并返回数据
             const { drafts } = yield select();
             let parameters = "?";
             if (drafts.filter.updated_at_min !== "") {
@@ -34,17 +34,17 @@ const Model = {
                 parameters = parameters + "limit=" + drafts.limit;
             }
 
-            const res_drafts = yield call(queryDraftOrders, parameters);
+            const res_tableData = yield call(queryTableData, parameters);
 
             let pagesUrl = { previous: '', next: '' };
 
-            if (res_drafts.headers['link']) { //如果响应头有link，获取并处理返回previous和next
-                pagesUrl = getPagesUrlByLink(res_drafts.headers['link']);
+            if (res_tableData.headers['link']) { //如果响应头有link，获取并处理返回previous和next
+                pagesUrl = getPagesUrlByLink(res_tableData.headers['link']);
             }
             yield put({
-                type: 'setDrafts_r',
+                type: 'setTableData_r',
                 payload: {
-                    draftsData: res_drafts.data.draft_orders,
+                    tableData: res_tableData.data.draft_orders,
                     nowPages: 1,
                     previous: pagesUrl.previous,
                     next: pagesUrl.next,
@@ -64,15 +64,15 @@ const Model = {
         },
         *previousPage_e(action, { call, put, select }) { //获取上一页的draft_orders
             const { drafts } = yield select();
-            const res_drafts = yield call(queryDraftsPage, drafts.previous);
+            const res_tableData = yield call(queryTableDataPage, drafts.previous);
             let pagesUrl = { previous: '', next: '' };
-            if (res_drafts.headers['link']) {
-                pagesUrl = getPagesUrlByLink(res_drafts.headers['link']);
+            if (res_tableData.headers['link']) {
+                pagesUrl = getPagesUrlByLink(res_tableData.headers['link']);
             }
             yield put({
-                type: 'setDrafts_r',
+                type: 'setTableData_r',
                 payload: {
-                    draftsData: res_drafts.data.draft_orders,
+                    tableData: res_tableData.data.draft_orders,
                     nowPage: drafts.nowPage - 1,
                     previous: pagesUrl.previous,
                     next: pagesUrl.next,
@@ -81,15 +81,15 @@ const Model = {
         },
         *nextPage_e(action, { call, put, select }) { //获取下一页的orders
             const { drafts } = yield select();
-            const res_drafts = yield call(queryDraftsPage, drafts.next);
+            const res_tableData = yield call(queryTableDataPage, drafts.next);
             let pagesUrl = { previous: '', next: '' };
-            if (res_drafts.headers['link']) {
-                pagesUrl = getPagesUrlByLink(res_drafts.headers['link']);
+            if (res_tableData.headers['link']) {
+                pagesUrl = getPagesUrlByLink(res_tableData.headers['link']);
             }
             yield put({
-                type: 'setDrafts_r',
+                type: 'setTableData_r',
                 payload: {
-                    draftsData: res_drafts.data.draft_orders,
+                    tableData: res_tableData.data.draft_orders,
                     nowPage: drafts.nowPage + 1,
                     previous: pagesUrl.previous,
                     next: pagesUrl.next,
@@ -98,7 +98,7 @@ const Model = {
         },
     },
     reducers: {
-        setDrafts_r(state, action) { //设置state
+        setTableData_r(state, action) { //设置state
             return {
                 ...state,
                 ...action.payload,

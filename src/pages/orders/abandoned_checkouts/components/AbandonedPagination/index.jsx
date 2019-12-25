@@ -1,31 +1,31 @@
 import { connect } from 'dva';
 import { MaqiPagination } from '@/pages/orders/components';
 
-const mapStateToProps = ({ orders, loading }) => ({
-    tableData: orders.tableData,
-    pageSize: orders.limit,
-    nowPage: orders.nowPage,
-    previous: orders.previous,
-    next: orders.next,
-    loading: loading.models["orders"],
+const mapStateToProps = ({ abandonedcheckouts, loading }) => ({
+    tableData: abandonedcheckouts.tableData,
+    pageSize: abandonedcheckouts.limit,
+    nowPage: abandonedcheckouts.nowPage,
+    previous: abandonedcheckouts.previous,
+    next: abandonedcheckouts.next,
+    loading: loading.models["abandonedcheckouts"],
 })
 const mapDispatchToProps = (dispatch) => ({
     getTableData: () => dispatch({
-        type: 'orders/setTableData_e'
+        type: 'abandonedcheckouts/setTableData_e'
     }),
     previousPage: () => dispatch({
-        type: 'orders/previousPage_e'
+        type: 'abandonedcheckouts/previousPage_e'
     }),
     nextPage: () => dispatch({
-        type: 'orders/nextPage_e'
+        type: 'abandonedcheckouts/nextPage_e'
     }),
     setLimit: (value) => dispatch({
-        type: 'orders/setLimit_r',
+        type: 'abandonedcheckouts/setLimit_r',
         payload: value,
     }),
 })
 @connect(mapStateToProps, mapDispatchToProps)
-export default class OrdersPagination extends React.Component {
+export default class AbandonedPagination extends React.Component {
     render() {
         const { pageSize, nowPage, previous, next, getTableData, previousPage, nextPage, setLimit } = this.props;
         return (

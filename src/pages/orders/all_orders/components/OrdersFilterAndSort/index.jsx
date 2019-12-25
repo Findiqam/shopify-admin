@@ -19,11 +19,12 @@ const { Option } = Select;
 
 const mapStateToProps = ({ orders, loading }) => ({
     filter: orders.filter,
+    sort: orders.sort,
     // loading: loading.models["orders"],
 })
 const mapDispatchToProps = (dispatch) => ({
-    getOrders: () => dispatch({
-        type: 'orders/setOrders_e'
+    getTableData: () => dispatch({
+        type: 'orders/setTableData_e'
     }),
     setFilter: (filter) => dispatch({
         type: 'orders/setFilter_e',
@@ -57,49 +58,53 @@ export default class OrdersFilterAndSort extends React.Component {
         moreFilter: false,//是否展示更多过滤器
     }
     render() {
-        const { filter, loading, getOrders, setFilter, resetFilter, setSort, } = this.props;
+        const { filter, sort, loading, getTableData, setFilter, resetFilter, setSort, } = this.props;
         const status_SelectValues = ["Any", "Open", "Closed", "Cancelled"];
         const status_SelectOptions = status_SelectValues.map((item) => (<Option value={item.toLowerCase()}>{item}</Option>));
         const paymentStatus_SelectValues = ["Authorized", "Paid", "Pending", "Partially_paid", "Refunded", "Voided", "Partially_refunded", "Unpaid"];
         const paymentStatus_SelectOptions = paymentStatus_SelectValues.map((item) => (<Option value={item.toLowerCase()} disabled={!this.state.paymentStatusOption}>{item}</Option>));
         const fulfillmentStatus_SelectValues = ["Shipped", "Partial", "Unshipped", "Unfulfilled"];
         const fulfillmentStatus_SelectOptions = fulfillmentStatus_SelectValues.map((item) => (<Option value={item.toLowerCase()} disabled={!this.state.fulfillmentStatusOption}>{item}</Option>));
-        const sort_SelectValues = ["Default", "Created date (oldest first)", "Created date (newest first)", "Updated date (oldest first)", "Updated date (newest first)"];
-        const sort_SelectOptions = sort_SelectValues.map((item) => (<Option value={item.toLowerCase()}>{item}</Option>))
+        // const sort_SelectValues = ["Default", "Created date (oldest first)", "Created date (newest first)", "Updated date (oldest first)", "Updated date (newest first)"];
+        // const sort_SelectOptions = sort_SelectValues.map((item) => (<Option value={item.toLowerCase()}>{item}</Option>))
 
         return (
             <Card
                 // loading={loading}
-                bodyStyle={{paddingBottom:0}}
+                bodyStyle={{ paddingBottom: 0 }}
                 bordered={false}
                 title={
                     <>Filter and sort by
                   <Select
                             size="small"
                             style={{ marginLeft: 10, width: 210 }}
-                            defaultValue="default"
+                            value={sort.order + sort.sort}
                             onChange={
                                 (value) => {
                                     let sort = { order: '', sort: '' };
-                                    if (value === "created date (oldest first)") {
+                                    if (value === "created_atasc") {
                                         sort.order = "created_at";
                                         sort.sort = "asc";
-                                    } else if (value === "created date (newest first)") {
+                                    } else if (value === "created_atdesc") {
                                         sort.order = "created_at";
                                         sort.sort = "desc";
-                                    } else if (value === "updated date (oldest first)") {
+                                    } else if (value === "updated_atasc") {
                                         sort.order = "updated_at";
                                         sort.sort = "asc";
-                                    } else if (value === "updated date (newest first)") {
+                                    } else if (value === "updated_atdesc") {
                                         sort.order = "updated_at";
                                         sort.sort = "desc";
                                     }
                                     setSort(sort);
-                                    getOrders();
+                                    getTableData();
                                 }
                             }
                         >
-                            {sort_SelectOptions}
+                            <Option value="">Default</Option>
+                            <Option value='created_atasc'>Created date (oldest first)</Option>
+                            <Option value='created_atdesc'>Created date (newest first)</Option>
+                            <Option value='updated_atasc'>Updated date (oldest first)</Option>
+                            <Option value='updated_atdesc'>Updated date (newest first)</Option>
                         </Select>
                     </>
                 }
@@ -115,7 +120,7 @@ export default class OrdersFilterAndSort extends React.Component {
                                         this.setState({
                                             moreFilter: false
                                         })
-                                        getOrders();
+                                        getTableData();
                                     }
                                 }
                             >
@@ -137,7 +142,7 @@ export default class OrdersFilterAndSort extends React.Component {
                                             setFilter({ name: "created_at_max", value });
                                             setFilter({ name: "updated_at_min", value });
                                             setFilter({ name: "updated_at_max", value });
-                                            getOrders();
+                                            getTableData();
                                         } else {
                                             this.setState({
                                                 moreFilter: !this.state.moreFilter
@@ -163,7 +168,7 @@ export default class OrdersFilterAndSort extends React.Component {
                                     onChange={
                                         (value) => {
                                             setFilter({ name: "status", value });
-                                            getOrders();
+                                            getTableData();
                                         }
                                     }
                                 >
@@ -188,7 +193,7 @@ export default class OrdersFilterAndSort extends React.Component {
                                             this.setState({
                                                 paymentStatusOption: false
                                             })
-                                            getOrders();
+                                            getTableData();
                                         }
                                     }
                                     onFocus={
@@ -216,7 +221,7 @@ export default class OrdersFilterAndSort extends React.Component {
                                             this.setState({
                                                 fulfillmentStatusOption: false
                                             })
-                                            getOrders();
+                                            getTableData();
                                         }
                                     }
                                     onFocus={
@@ -297,7 +302,7 @@ export default class OrdersFilterAndSort extends React.Component {
                                                     type="primary"
                                                     onClick={
                                                         () => {
-                                                            getOrders();
+                                                            getTableData();
                                                         }
                                                     }
                                                 >
@@ -368,7 +373,7 @@ export default class OrdersFilterAndSort extends React.Component {
                                                     type="primary"
                                                     onClick={
                                                         () => {
-                                                            getOrders();
+                                                            getTableData();
                                                         }
                                                     }
                                                 >
@@ -387,7 +392,7 @@ export default class OrdersFilterAndSort extends React.Component {
                                                 onSearch={
                                                     value => {
                                                         setFilter({ name: "name", value });
-                                                        getOrders();
+                                                        getTableData();
                                                     }
                                                 }
                                             />

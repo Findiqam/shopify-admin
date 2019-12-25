@@ -1,4 +1,4 @@
-import { queryOrders, getOrdersCount, queryOrdersPage } from './service';
+import { queryTableData, getListCount, queryTableDataPage } from './service';
 import { getPagesUrlByLink } from './util';
 
 const initialFilter = { //初始filter
@@ -16,11 +16,11 @@ const initialSort = { //初始sort
     sort: '',
 }
 const initialState = { //初始state
-    ordersData: [],
+    tableData: [],
     filter: initialFilter,
     sort: initialSort,
     limit: 5,
-    ordersCount: 0,
+    listCount: 0,
     pageCount: 1,
     nowPage: 1,
     previous: '',
@@ -30,7 +30,7 @@ const Model = { //orders model
     namespace: 'orders',
     state: initialState,
     effects: {
-        *setOrders_e(action, { call, put, select }) {  //根据filter筛选orders并返回数据
+        *setTableData_e(action, { call, put, select }) {  //根据filter筛选orders并返回数据
             const { orders } = yield select();
             let parameters = "?";
             if (orders.filter.name !== "") {
@@ -58,7 +58,7 @@ const Model = { //orders model
                 parameters = parameters + "fulfillment_status=" + orders.filter.fulfillment_status + "&";
             }
 
-            const res_orders_count = yield call(getOrdersCount, parameters); //获取在该filter下的orders总数响应
+            const res_listCount = yield call(getListCount, parameters); //获取在该filter下的orders总数响应
 
             if (orders.sort.order !== "") {
                 parameters = parameters + "order=" + orders.sort.order + " " + orders.sort.sort + "&";
@@ -68,19 +68,19 @@ const Model = { //orders model
                 parameters = parameters + "limit=" + orders.limit;
             }
 
-            const res_orders = yield call(queryOrders, parameters); //获取在该filter下的orders响应
+            const res_tabledata = yield call(queryTableData, parameters); //获取在该filter下的orders响应
 
             let pagesUrl = { previous: '', next: '' };
 
-            if (res_orders.headers['link']) { //如果响应头有link，获取并处理返回previous和next
-                pagesUrl = getPagesUrlByLink(res_orders.headers['link']);
+            if (res_tabledata.headers['link']) { //如果响应头有link，获取并处理返回previous和next
+                pagesUrl = getPagesUrlByLink(res_tabledata.headers['link']);
             }
             yield put({ //设置在该filter下的state
-                type: 'setOrders_r',
+                type: 'setTableData_r',
                 payload: {
-                    ordersData: res_orders.data.orders,
-                    ordersCount: res_orders_count.data.count,
-                    pageCount: parseInt(res_orders_count.data.count / 10 + 1),
+                    tableData: res_tabledata.data.orders,
+                    listCount: res_listCount.data.count,
+                    pageCount: parseInt(res_listCount.data.count / 10 + 1),
                     nowPage: 1,
                     previous: pagesUrl.previous,
                     next: pagesUrl.next,
@@ -106,15 +106,15 @@ const Model = { //orders model
         },
         *previousPage_e(action, { call, put, select }) { //获取上一页的orders
             const { orders } = yield select();
-            const res_orders = yield call(queryOrdersPage, orders.previous);
+            const res_tabledata = yield call(queryTableDataPage, orders.previous);
             let pagesUrl = { previous: '', next: '' };
-            if (res_orders.headers['link']) {
-                pagesUrl = getPagesUrlByLink(res_orders.headers['link']);
+            if (res_tabledata.headers['link']) {
+                pagesUrl = getPagesUrlByLink(res_tabledata.headers['link']);
             }
             yield put({
-                type: 'setOrders_r',
+                type: 'setTableData_r',
                 payload: {
-                    ordersData: res_orders.data.orders,
+                    tableData: res_tabledata.data.orders,
                     nowPage: orders.nowPage - 1,
                     previous: pagesUrl.previous,
                     next: pagesUrl.next,
@@ -123,24 +123,25 @@ const Model = { //orders model
         },
         *nextPage_e(action, { call, put, select }) { //获取下一页的orders
             const { orders } = yield select();
-            const res_orders = yield call(queryOrdersPage, orders.next);
+            const res_tabledata = yield call(queryTableDataPage, orders.next);
             let pagesUrl = { previous: '', next: '' };
-            if (res_orders.headers['link']) {
-                pagesUrl = getPagesUrlByLink(res_orders.headers['link']);
+            if (res_tabledata.headers['link']) {
+                pagesUrl = getPagesUrlByLink(res_tabledata.headers['link']);
             }
             yield put({
-                type: 'setOrders_r',
+                type: 'setTableData_r',
                 payload: {
-                    ordersData: res_orders.data.orders,
+                    tableData: res_tabledata.data.orders,
                     nowPage: orders.nowPage + 1,
                     previous: pagesUrl.previous,
                     next: pagesUrl.next,
                 }
             })
-        }
+        },
+        
     },
     reducers: {
-        setOrders_r(state, action) { //设置state
+        setTableData_r(state, action) { //设置state
             return {
                 ...state,
                 ...action.payload,
