@@ -7,9 +7,20 @@ import {
 } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
-@connect()
+const mapStateToProps = ({ loading }) => ({
+  loading: loading.models["orderdetails"],
+})
+const mapDispatchToProps = (dispatch) => ({
+  setDetails: () => dispatch({
+      type: 'orderdetails/setDetails_e',
+  }),
+})
+@connect(mapStateToProps, mapDispatchToProps)
 class OrderDetails extends React.Component {
-
+  componentDidMount() {
+    const { setDetails } = this.props;
+    setDetails();
+}
   render() {
 
     return (

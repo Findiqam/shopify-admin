@@ -15,6 +15,10 @@ const mapDispatchToProps = (dispatch) => ({
     getTableData: () => dispatch({
         type: 'abandonedcheckouts/setTableData_e'
     }),
+    setDetails: (details) => dispatch({
+        type: 'abandonedcheckouts/setDetails_r',
+        payload: details,
+    }),
 })
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AbandonedTable extends React.Component {
@@ -23,13 +27,26 @@ export default class AbandonedTable extends React.Component {
         getTableData();
     }
     render() {
-        const { tableData, loading, } = this.props;
+        const { tableData, loading, setDetails, } = this.props;
         const columns = [
             {
                 title: 'Checkout',
                 dataIndex: 'name',
                 key: 'name',
-                render: (name, record) => (<Button type="link" size="small" onClick={() => { location.hash = "/orders/draft_orders/draft_order_details" }}>{name}</Button>)
+                render: (name, record) => (
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={
+                            () => {
+                                setDetails(record);
+                                location.hash = "/orders/abandoned_checkouts/abandoned_checkouts_details";
+                            }
+                        }
+                    >
+                        {name}
+                    </Button>
+                )
             },
             {
                 title: 'Date',

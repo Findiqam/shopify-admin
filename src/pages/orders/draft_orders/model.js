@@ -12,6 +12,7 @@ const initialState = {
     nowPage: 1,
     previous: '',
     next: '',
+    thisDetails:'',
 }
 const Model = {
     namespace: 'drafts',
@@ -133,6 +134,12 @@ const Model = {
             return {
                 ...state,
                 limit: action.payload,
+            }
+        },
+        setDetails_r(state, action){
+            return {
+                ...state,
+                thisDetails: action.payload,
             }
         },
     },

@@ -7,7 +7,7 @@ import {
     Card,
 } from 'antd';
 import moment from 'moment';
-const mapStateToProps = ({ orders, loading }) => ({
+const mapStateToProps = ({ orders, loading, }) => ({
     tableData: orders.tableData,
     loading: loading.models["orders"],
     sort: orders.sort,
@@ -25,6 +25,10 @@ const mapDispatchToProps = (dispatch) => ({
         type: 'orders/setFilter_e',
         payload: filter
     }),
+    setDetails: (id) => dispatch({
+        type: 'orders/setDetails_r',
+        payload: id,
+    }),
 })
 @connect(mapStateToProps, mapDispatchToProps)
 export default class OrdersTable extends React.Component {
@@ -33,7 +37,7 @@ export default class OrdersTable extends React.Component {
         getTableData();
     }
     render() {
-        const { tableData, loading, sort, filter, setSort, getTableData, setFilter } = this.props;
+        const { tableData, loading, sort, filter, setSort, getTableData, setFilter, setDetails } = this.props;
         const paymentStatus_SelectValues = ["Authorized", "Paid", "Pending", "Partially_paid", "Refunded", "Voided", "Partially_refunded", "Unpaid"];
         const paymentStatus_SelectOptions = paymentStatus_SelectValues.map((item) => ({ text: item, value: item.toLowerCase() }));
 
@@ -59,7 +63,17 @@ export default class OrdersTable extends React.Component {
                 title: 'Order',
                 dataIndex: 'name',
                 key: 'name',
-                render: (name, record) => (<Button type="link" size="small" onClick={() => { location.hash = "/orders/all_orders/order_details" }}>{name}</Button>)
+                render: (name, record) => (
+                    <Button type="link" size="small" onClick={
+                        () => {
+                            setDetails(record.id);
+                            location.hash = "/orders/all_orders/order_details";
+                        }
+                    }
+                    >
+                        {name}
+                    </Button>
+                )
             },
             {
                 title: 'Date',

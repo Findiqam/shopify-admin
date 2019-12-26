@@ -334,7 +334,7 @@ export default {
             // },
             {
               path: '/',
-              redirect:'/orders/all_orders',
+              redirect: '/orders/all_orders',
             },
             {
               name: 'orders',
@@ -366,13 +366,13 @@ export default {
                       component: './orders/draft_orders',
                     },
                     {
-                      name:'draft-order-details',
+                      name: 'draft-order-details',
                       path: '/orders/draft_orders/draft_order_details',
                       hideInMenu: true,
                       component: './orders/draft_orders/draft_order_details',
                     },
                     {
-                      name:'new-draft-order',
+                      name: 'new-draft-order',
                       path: '/orders/draft_orders/new',
                       hideInMenu: true,
                       component: './orders/draft_orders/new',
@@ -382,7 +382,18 @@ export default {
                 {
                   name: 'abandoned-checkouts',
                   path: '/orders/abandoned_checkouts',
-                  component: './orders/abandoned_checkouts',
+                  routes: [
+                    {
+                      path: '/orders/abandoned_checkouts',
+                      component: './orders/abandoned_checkouts',
+                    },
+                    {
+                      name: 'abandoned-checkouts-details',
+                      path: '/orders/abandoned_checkouts/abandoned_checkouts_details',
+                      hideInMenu: true,
+                      component: './orders/abandoned_checkouts/abandoned_checkouts_details',
+                    },
+                  ],
                 },
               ],
             },

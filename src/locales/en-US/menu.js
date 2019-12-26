@@ -55,6 +55,7 @@ export default {
   'menu.orders.drafts.draft-order-details':'Draft order details',
   'menu.orders.drafts.new-draft-order':'New draft order',
   'menu.orders.abandoned-checkouts':'Abandoned checkouts',
+  'menu.orders.abandoned-checkouts.abandoned-checkouts-details':'Abandoned checkout details',
   'menu.products':'Products',
   'menu.products.all-products':'All products',
   'menu.customers':'Customers',
