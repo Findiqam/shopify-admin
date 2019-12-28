@@ -14,3 +14,22 @@ export function getPagesUrlByLink(Link) {
   }
   return pagesUrl;
 }
+//支付状态标签色
+export const paymentStatus_TagColor = {
+  authorized: 'cyan',
+  paid: 'green',
+  pending: 'orange',
+  partially_paid: 'lime',
+  refunded: 'blue',
+  voided: 'magenta',
+  partially_refunded: 'geekblue',
+  unpaid: 'red',
+}
+//履行状态标签色
+export const fulfillmentStatus_TagColor = {
+  shipped: 'lime',
+  partial: 'lime',
+  unshipped: 'orange',
+  unfulfilled: 'red',
+  fulfilled: 'green',
+}

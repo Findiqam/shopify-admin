@@ -55,6 +55,7 @@ export default {
   'menu.orders.drafts.draft-order-details':'草稿订单详情',
   'menu.orders.drafts.new-draft-order':'新建草稿订单',
   'menu.orders.abandoned-checkouts':'弃单',
+  'menu.orders.abandoned-checkouts.abandoned-checkouts-details':'弃单详情',
   'menu.products':'产品',
   'menu.products.all-products':'所有产品',
   'menu.customers':'顾客',

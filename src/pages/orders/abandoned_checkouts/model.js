@@ -6,7 +6,7 @@ const initialFilter = { //初始filter
     created_at_max: "",
     updated_at_min: "",
     updated_at_max: "",
-    status: 'open',
+    status: 'any',
 };
 const initialState = {
     tableData: [],
@@ -15,6 +15,7 @@ const initialState = {
     nowPage: 1,
     previous: '',
     next: '',
+    thisDetails:"",
 }
 const Model = {
     namespace: 'abandonedcheckouts',
@@ -88,7 +89,7 @@ const Model = {
                 type: 'setTableData_r',
                 payload: {
                     tableData: res_tabledata.data.checkouts,
-                    nowPage: res_tabledata.nowPage - 1,
+                    nowPage: abandonedcheckouts.nowPage - 1,
                     previous: pagesUrl.previous,
                     next: pagesUrl.next,
                 }
@@ -105,13 +106,13 @@ const Model = {
                 type: 'setTableData_r',
                 payload: {
                     tableData: res_tabledata.data.checkouts,
-                    nowPage: res_tabledata.nowPage + 1,
+                    nowPage: abandonedcheckouts.nowPage + 1,
                     previous: pagesUrl.previous,
                     next: pagesUrl.next,
                 }
             })
         },
-
+        
     },
     reducers: {
         setTableData_r(state, action) { //设置state
@@ -160,7 +161,13 @@ const Model = {
                 ...state,
                 limit: action.payload,
             }
-        }
+        },
+        setDetails_r(state, action){
+            return {
+                ...state,
+                thisDetails: action.payload,
+            }
+        },
     }
 }
 export default Model;

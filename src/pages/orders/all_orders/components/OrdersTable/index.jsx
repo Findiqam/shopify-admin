@@ -5,9 +5,14 @@ import {
     Button,
     Icon,
     Card,
+    Tooltip,
+    Tag,
+    Badge,
 } from 'antd';
 import moment from 'moment';
-const mapStateToProps = ({ orders, loading }) => ({
+import { paymentStatus_TagColor, fulfillmentStatus_TagColor } from '../../util';
+
+const mapStateToProps = ({ orders, loading, }) => ({
     tableData: orders.tableData,
     loading: loading.models["orders"],
     sort: orders.sort,
@@ -25,6 +30,10 @@ const mapDispatchToProps = (dispatch) => ({
         type: 'orders/setFilter_e',
         payload: filter
     }),
+    setDetails: (id) => dispatch({
+        type: 'orders/setDetails_r',
+        payload: id,
+    }),
 })
 @connect(mapStateToProps, mapDispatchToProps)
 export default class OrdersTable extends React.Component {
@@ -33,7 +42,7 @@ export default class OrdersTable extends React.Component {
         getTableData();
     }
     render() {
-        const { tableData, loading, sort, filter, setSort, getTableData, setFilter } = this.props;
+        const { tableData, loading, sort, filter, setSort, getTableData, setFilter, setDetails } = this.props;
         const paymentStatus_SelectValues = ["Authorized", "Paid", "Pending", "Partially_paid", "Refunded", "Voided", "Partially_refunded", "Unpaid"];
         const paymentStatus_SelectOptions = paymentStatus_SelectValues.map((item) => ({ text: item, value: item.toLowerCase() }));
 
@@ -59,7 +68,26 @@ export default class OrdersTable extends React.Component {
                 title: 'Order',
                 dataIndex: 'name',
                 key: 'name',
-                render: (name, record) => (<Button type="link" size="small" onClick={() => { location.hash = "/orders/all_orders/order_details" }}>{name}</Button>)
+                render: (name, record) => (
+                    <>
+                        {
+                            record.closed_at !== null ?
+                                <Tooltip title="This order has been closed"><Icon type="folder" theme="filled" /></Tooltip>
+                                :
+                                <Tooltip title="This order is open"><Icon type="folder-open" /></Tooltip>
+                        }
+                        <Button type="link" size="small" onClick={
+                            () => {
+                                setDetails(record.id);
+                                location.hash = "/orders/all_orders/order_details";
+                            }
+                        }
+                        >
+                            {name}
+                        </Button>
+                        {record.note !== null && record.note !== "" && <Tooltip title="This order has notes"><Icon type="file-text" /></Tooltip>}
+                    </>
+                )
             },
             {
                 title: 'Date',
@@ -79,6 +107,7 @@ export default class OrdersTable extends React.Component {
                 title: 'Payment',
                 dataIndex: 'financial_status',
                 key: 'financial_status',
+                render: financial_status => (<Tag color={paymentStatus_TagColor[financial_status]}><Badge color={paymentStatus_TagColor[financial_status]} text={financial_status} /></Tag>),
                 filters: paymentStatus_SelectOptions,
                 filteredValue: filter.financial_status,
             },
@@ -90,10 +119,10 @@ export default class OrdersTable extends React.Component {
                 filteredValue: filter.fulfillment_status,
                 render: fulfillment_status => {
                     if (fulfillment_status === null) {
-                        return 'Unfulfilled'
+                        return <Tag color={fulfillmentStatus_TagColor['unfulfilled']}><Badge color={fulfillmentStatus_TagColor['unfulfilled']} text='unfulfilled' /></Tag>
                     }
                     else {
-                        return fulfillment_status
+                        return <Tag color={fulfillmentStatus_TagColor[fulfillment_status]}><Badge color={fulfillmentStatus_TagColor[fulfillment_status]} text={fulfillment_status} /></Tag>
                     }
                 },
             },

@@ -25,6 +25,7 @@ const initialState = { //初始state
     nowPage: 1,
     previous: '',
     next: '',
+    thisDetails:'',
 }
 const Model = { //orders model
     namespace: 'orders',
@@ -196,7 +197,13 @@ const Model = { //orders model
                 ...state,
                 limit: action.payload,
             }
-        }
+        },
+        setDetails_r(state, action){
+            return {
+                ...state,
+                thisDetails: action.payload,
+            }
+        },
     }
 }
 

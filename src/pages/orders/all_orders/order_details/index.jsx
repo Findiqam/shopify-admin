@@ -2,14 +2,25 @@ import { connect } from 'dva';
 import {
   Table,
   Card,
-  Row,Col,
+  Row, Col,
 
 } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
-@connect()
+const mapStateToProps = ({ orderdetails, loading }) => ({
+  loading: loading.models["orderdetails"],
+})
+const mapDispatchToProps = (dispatch) => ({
+  setDetails: () => dispatch({
+    type: 'orderdetails/setDetails_e',
+  }),
+})
+@connect(mapStateToProps, mapDispatchToProps)
 class OrderDetails extends React.Component {
-
+  componentDidMount() {
+    const { setDetails } = this.props;
+    setDetails();
+  }
   render() {
 
     return (
@@ -17,7 +28,7 @@ class OrderDetails extends React.Component {
         <PageHeaderWrapper
           onBack={
             () => {
-              location.hash='/orders/all_orders';
+              location.hash = '/orders/all_orders';
             }
           }
         >
@@ -29,9 +40,9 @@ class OrderDetails extends React.Component {
                 </Card>
               </Col>
               <Col span={7}>
-              <Card>
-                  
-                  </Card>
+                <Card>
+
+                </Card>
               </Col>
             </Row>
           </Card>

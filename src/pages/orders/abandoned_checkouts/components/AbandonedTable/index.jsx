@@ -5,6 +5,9 @@ import {
     Button,
     Icon,
     Card,
+    Tooltip,
+    Tag,
+
 } from 'antd';
 import moment from 'moment';
 const mapStateToProps = ({ abandonedcheckouts, loading }) => ({
@@ -15,6 +18,10 @@ const mapDispatchToProps = (dispatch) => ({
     getTableData: () => dispatch({
         type: 'abandonedcheckouts/setTableData_e'
     }),
+    setDetails: (details) => dispatch({
+        type: 'abandonedcheckouts/setDetails_r',
+        payload: details,
+    }),
 })
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AbandonedTable extends React.Component {
@@ -23,13 +30,30 @@ export default class AbandonedTable extends React.Component {
         getTableData();
     }
     render() {
-        const { tableData, loading, } = this.props;
+        const { tableData, loading, setDetails, } = this.props;
         const columns = [
             {
                 title: 'Checkout',
                 dataIndex: 'name',
                 key: 'name',
-                render: (name, record) => (<Button type="link" size="small" onClick={() => { location.hash = "/orders/draft_orders/draft_order_details" }}>{name}</Button>)
+                render: (name, record) => (
+                    <>
+                        {record.closed_at !== null ? <Tooltip title="This order has been closed"><Icon type="folder" theme="filled" /></Tooltip> : <Tooltip title="This order is open"><Icon type="folder-open" /></Tooltip>}
+                        <Button
+                            type="link"
+                            size="small"
+                            onClick={
+                                () => {
+                                    setDetails(record);
+                                    location.hash = "/orders/abandoned_checkouts/abandoned_checkouts_details";
+                                }
+                            }
+                        >
+                            {name}
+                        </Button>
+                        {record.note !== null && record.note !== "" && <Tooltip title="This order has notes"><Icon type="file-text" /></Tooltip>}
+                    </>
+                )
             },
             {
                 title: 'Date',
@@ -47,13 +71,13 @@ export default class AbandonedTable extends React.Component {
                 title: 'Email Status',
                 dataIndex: 'email',
                 key: 'email',
-                render: email => (email ? email : "Not Sent"),
+                render: email => (email ? email : <Tag color='orange'>Not Sent</Tag>),
             },
             {
                 title: 'Recovery Status',
                 dataIndex: 'abandoned_checkout_url',
                 key: 'abandoned_checkout_url',
-                render: abandoned_checkout_url => (abandoned_checkout_url === "" ? 'Recovered' : 'Not Recovered')
+                render: abandoned_checkout_url => (abandoned_checkout_url === "" ? 'Recovered' : <Tag color='orange'>Not Recovered</Tag>)
             },
             {
                 title: 'Total',
