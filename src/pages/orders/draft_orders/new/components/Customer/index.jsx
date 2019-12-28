@@ -5,27 +5,35 @@ import {
     Row, Col,
     Icon,
     Button,
-
+    Modal,
+    Form,
+    Input,
 } from 'antd';
-const mapStateToProps = ({ abandonedcheckoutdetails, loading }) => ({
-    customer: abandonedcheckoutdetails.thisDetails.customer,
-    shipping_address: abandonedcheckoutdetails.thisDetails.shipping_address,
-    billing_address: abandonedcheckoutdetails.thisDetails.billing_address,
-    loading: loading.models["abandonedcheckoutdetails"],
+
+const mapStateToProps = ({ newdrafts, loading }) => ({
+    customer: newdrafts.customer,
+    loading: loading.models["newdrafts"],
 })
 const mapDispatchToProps = (dispatch) => ({
-
+    setCustomer: () => dispatch({
+        type: 'newdrafts/setCustomer_r',
+        payload: '',
+    })
 })
 @connect(mapStateToProps, mapDispatchToProps)
 class Customer extends React.Component {
 
+    state = {
+        billing_address_visible: false,
+    };
     render() {
-        const { customer, shipping_address, billing_address, } = this.props;
+        const { customer, setCustomer } = this.props;
         return (
             <>
                 <Card
                     title="Customer"
                     bordered={false}
+                    extra={<Button size='small' type='link' onClick={() => { setCustomer(); }}><Icon type="close" /></Button>}
                 >
                     <Row>
                         <Col span={4}>
@@ -37,26 +45,7 @@ class Customer extends React.Component {
                         <Col span={24}>{customer.email !== null ? customer.email : 'No email provided'}</Col>
                         <Col span={24}>{customer.phone !== null ? customer.phone : 'No phone'}</Col>
                         <Col span={24}>{customer.account ? customer.account : 'No account'}</Col>
-
                     </Row>
-
-                </Card>
-                <Card
-                    title="SHIPPING ADDRESS"
-                    bordered={false}
-                >
-                    <Row>
-                        <Col span={24}>{shipping_address.first_name + ' ' + shipping_address.last_name}</Col>
-                        <Col span={24}>{shipping_address.address1 + ' ' + shipping_address.city}</Col>
-                        <Col span={24}>{shipping_address.zip + ' ' + shipping_address.province}</Col>
-                        <Col span={24}>{shipping_address.country}</Col>
-                    </Row>
-                </Card>
-                <Card
-                    title="BILLING ADDRESS"
-                    bordered={false}
-                >
-                    {billing_address ? billing_address : 'No billing address'}
                 </Card>
             </>
         );

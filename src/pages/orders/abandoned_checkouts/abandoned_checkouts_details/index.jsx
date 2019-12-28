@@ -13,6 +13,7 @@ import Customer from './components/Customer';
 const mapStateToProps = ({ abandonedcheckoutdetails, loading }) => ({
     name: abandonedcheckoutdetails.thisDetails.name,
     created_at: abandonedcheckoutdetails.thisDetails.created_at,
+    thisDetails: abandonedcheckoutdetails.thisDetails,
     loading: loading.models["abandonedcheckoutdetails"],
 })
 const mapDispatchToProps = (dispatch) => ({
@@ -27,7 +28,7 @@ class AbandonedCheckoutDetails extends React.Component {
         setDetails();
     }
     render() {
-        const { name, created_at, loading } = this.props;
+        const { name, created_at, thisDetails, loading } = this.props;
         return (
             <>
                 <PageHeaderWrapper
@@ -41,14 +42,17 @@ class AbandonedCheckoutDetails extends React.Component {
                         title={<><div style={{ fontWeight: 500, fontSize: 35 }}>{name}</div>{moment(created_at).format("YYYY年MM月DD日 hh:mm:ss")}</>}
                         loading={loading}
                     >
-                        <Row gutter={24}>
-                            <Col span={17}>
-                                <CheckoutDetails />
-                            </Col>
-                            <Col span={7}>
-                                <Customer />
-                            </Col>
-                        </Row>
+                        {
+                            thisDetails === "" ? "" :
+                                <Row gutter={24}>
+                                    <Col span={17}>
+                                        <CheckoutDetails />
+                                    </Col>
+                                    <Col span={7}>
+                                        <Customer />
+                                    </Col>
+                                </Row>
+                        }
                     </Card>
                 </PageHeaderWrapper>
             </>

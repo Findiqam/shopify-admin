@@ -47,6 +47,7 @@ axios.interceptors.response.use(response => response, (error) => {
   return response;
 })
 
-axios.defaults.headers['X-Shopify-Access-Token'] = access_token
+axios.defaults.headers['X-Shopify-Access-Token'] = access_token;
+axios.defaults.headers.post['Content-Type']='application/json';
 
 export default axios;

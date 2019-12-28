@@ -15,7 +15,7 @@ const initialState = {
     nowPage: 1,
     previous: '',
     next: '',
-    thisDetails:{},
+    thisDetails:"",
 }
 const Model = {
     namespace: 'abandonedcheckouts',

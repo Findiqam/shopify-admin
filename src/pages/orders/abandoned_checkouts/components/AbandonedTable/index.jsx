@@ -5,6 +5,9 @@ import {
     Button,
     Icon,
     Card,
+    Tooltip,
+    Tag,
+
 } from 'antd';
 import moment from 'moment';
 const mapStateToProps = ({ abandonedcheckouts, loading }) => ({
@@ -34,18 +37,22 @@ export default class AbandonedTable extends React.Component {
                 dataIndex: 'name',
                 key: 'name',
                 render: (name, record) => (
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={
-                            () => {
-                                setDetails(record);
-                                location.hash = "/orders/abandoned_checkouts/abandoned_checkouts_details";
+                    <>
+                        {record.closed_at !== null ? <Tooltip title="This order has been closed"><Icon type="folder" theme="filled" /></Tooltip> : <Tooltip title="This order is open"><Icon type="folder-open" /></Tooltip>}
+                        <Button
+                            type="link"
+                            size="small"
+                            onClick={
+                                () => {
+                                    setDetails(record);
+                                    location.hash = "/orders/abandoned_checkouts/abandoned_checkouts_details";
+                                }
                             }
-                        }
-                    >
-                        {name}
-                    </Button>
+                        >
+                            {name}
+                        </Button>
+                        {record.note !== null && record.note !== "" && <Tooltip title="This order has notes"><Icon type="file-text" /></Tooltip>}
+                    </>
                 )
             },
             {
@@ -64,13 +71,13 @@ export default class AbandonedTable extends React.Component {
                 title: 'Email Status',
                 dataIndex: 'email',
                 key: 'email',
-                render: email => (email ? email : "Not Sent"),
+                render: email => (email ? email : <Tag color='orange'>Not Sent</Tag>),
             },
             {
                 title: 'Recovery Status',
                 dataIndex: 'abandoned_checkout_url',
                 key: 'abandoned_checkout_url',
-                render: abandoned_checkout_url => (abandoned_checkout_url === "" ? 'Recovered' : 'Not Recovered')
+                render: abandoned_checkout_url => (abandoned_checkout_url === "" ? 'Recovered' : <Tag color='orange'>Not Recovered</Tag>)
             },
             {
                 title: 'Total',

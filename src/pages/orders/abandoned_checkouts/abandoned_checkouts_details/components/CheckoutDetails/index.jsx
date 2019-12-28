@@ -4,14 +4,15 @@ import {
     Row, Col,
     List,
     Avatar,
-
+    Input,
 } from 'antd';
-
+const { TextArea } = Input;
 const mapStateToProps = ({ abandonedcheckoutdetails, loading }) => ({
     line_items: abandonedcheckoutdetails.thisDetails.line_items,
     subtotal_price: abandonedcheckoutdetails.thisDetails.subtotal_price,
     total_price: abandonedcheckoutdetails.thisDetails.total_price,
     note: abandonedcheckoutdetails.thisDetails.note,
+    productsImages: abandonedcheckoutdetails.productsImages,
     loading: loading.models["abandonedcheckoutdetails"],
 })
 const mapDispatchToProps = (dispatch) => ({
@@ -21,7 +22,7 @@ const mapDispatchToProps = (dispatch) => ({
 class CheckoutDetails extends React.Component {
 
     render() {
-        const { line_items, subtotal_price, total_price, note } = this.props;
+        const { line_items, subtotal_price, total_price, note, loading, productsImages } = this.props;
         return (
             <>
                 <Card
@@ -36,9 +37,14 @@ class CheckoutDetails extends React.Component {
                                     extra={'$' + item.line_price}
                                 >
                                     <List.Item.Meta
-                                        avatar={<Avatar shape="square" size={64} icon="user" />}
+                                        avatar={<img src={productsImages[item.product_id + 'v' + item.variant_id]} alt={item.product_id + 'v' + item.variant_id} style={{ width: 50 }} />}
                                         title={<a>{item.title}</a>}
-                                        description={'SKU:' + item.sku}
+                                        description={
+                                            <>
+                                                <div>{item.variant_title}</div>
+                                                <div>SKU: {item.sku}</div>
+                                            </>
+                                        }
                                     />
                                     <div style={{ margin: '50px 50px' }}>{'$' + item.price + ' x ' + item.quantity}</div>
                                 </List.Item>
@@ -80,7 +86,7 @@ class CheckoutDetails extends React.Component {
                             Note
                     </Col>
                         <Col span={24}>
-                            {note}
+                            <TextArea rows={4} value={note} />
                         </Col>
                     </Row>
                 </Card>

@@ -5,8 +5,13 @@ import {
     Button,
     Icon,
     Card,
+    Tooltip,
+    Tag,
+    Badge,
 } from 'antd';
 import moment from 'moment';
+import { paymentStatus_TagColor, fulfillmentStatus_TagColor } from '../../util';
+
 const mapStateToProps = ({ orders, loading, }) => ({
     tableData: orders.tableData,
     loading: loading.models["orders"],
@@ -64,15 +69,24 @@ export default class OrdersTable extends React.Component {
                 dataIndex: 'name',
                 key: 'name',
                 render: (name, record) => (
-                    <Button type="link" size="small" onClick={
-                        () => {
-                            setDetails(record.id);
-                            location.hash = "/orders/all_orders/order_details";
+                    <>
+                        {
+                            record.closed_at !== null ?
+                                <Tooltip title="This order has been closed"><Icon type="folder" theme="filled" /></Tooltip>
+                                :
+                                <Tooltip title="This order is open"><Icon type="folder-open" /></Tooltip>
                         }
-                    }
-                    >
-                        {name}
-                    </Button>
+                        <Button type="link" size="small" onClick={
+                            () => {
+                                setDetails(record.id);
+                                location.hash = "/orders/all_orders/order_details";
+                            }
+                        }
+                        >
+                            {name}
+                        </Button>
+                        {record.note !== null && record.note !== "" && <Tooltip title="This order has notes"><Icon type="file-text" /></Tooltip>}
+                    </>
                 )
             },
             {
@@ -93,6 +107,7 @@ export default class OrdersTable extends React.Component {
                 title: 'Payment',
                 dataIndex: 'financial_status',
                 key: 'financial_status',
+                render: financial_status => (<Tag color={paymentStatus_TagColor[financial_status]}><Badge color={paymentStatus_TagColor[financial_status]} text={financial_status} /></Tag>),
                 filters: paymentStatus_SelectOptions,
                 filteredValue: filter.financial_status,
             },
@@ -104,10 +119,10 @@ export default class OrdersTable extends React.Component {
                 filteredValue: filter.fulfillment_status,
                 render: fulfillment_status => {
                     if (fulfillment_status === null) {
-                        return 'Unfulfilled'
+                        return <Tag color={fulfillmentStatus_TagColor['unfulfilled']}><Badge color={fulfillmentStatus_TagColor['unfulfilled']} text='unfulfilled' /></Tag>
                     }
                     else {
-                        return fulfillment_status
+                        return <Tag color={fulfillmentStatus_TagColor[fulfillment_status]}><Badge color={fulfillmentStatus_TagColor[fulfillment_status]} text={fulfillment_status} /></Tag>
                     }
                 },
             },
