@@ -1,0 +1,23 @@
+from selenium import webdriver
+driver = webdriver.Chrome(r'E:\谷歌\chromedriver.exe')
+driver.get('http://localhost:8000/#/customers')
+
+ele=driver.find_element_by_xpath("button//[@class='ant-btn'][@type='button']")
+ele.click()
+driver.find_element_by_xpath("span//[@class='ant-form-item-children']//input[@type='text']")[0].send_keys('hhhhh')
+driver.find_element_by_xpath("span//[@class='ant-form-item-children']//input[@type='text']")[1].send_keys('1111')
+driver.find_element_by_xpath("span//[@class=ant-form-item-children]//input[@type='text']")[2].send_keys('1362321407@qq.com')
+driver.find_element_by_xpath("span//[@class=ant-input-wrapper ant-input-group]//input[@type='text']")[3].send_keys('12345678912')
+ele=driver.find_elements_by_css_selector('.ant-input-group-addon div[class=ant-select ant-select-enabled]')
+ele.click()
+ele=driver.find_element_by_xpath("div//[@class=ant-select-dropdown ant-select-dropdown--single ant-select-dropdown-placement-bottmiLeft]//div[@id='41ea48d0-1cc0-4f17-ba2a-349bcf743c68']")
+driver.find_element_by_xpath("div//[@id=41ea48d0-1cc0-4f17-ba2a-349bcf743c68]//wl[@role='listbox']")[0].click()
+ele=driver.find_element_by_xpath("div//[@class='ant-card-body'][@class='ant-form ant-form-horizontal']")
+ele=driver.find_elements_by_xpath("div//[@class='ant-form ant-form-horizontal'][@class='ant-col ant-form-item-control-wrapper']")
+ele=driver.find_elements_by_xpath("div//[class=ant-col ant-form-item-control-wrapper]//span[@class='ant-form-item-children']")
+ele=driver.find_elements_by_xpath("span//[class=ant-form-item-children]//input[@class='ant-input']")
+ele.send_keys('555')
+ele=driver.find_elements_by_xpath("//div [class=ant-col ant-form-item-control-wrapper]//span[@class='ant-form-item-children']")
+ele=driver.find_elements_by_xpath("//span [class=ant-form-item-children]//input[@type='ant-form-item-children']")
+ele.send_keys('2222')
+pass
