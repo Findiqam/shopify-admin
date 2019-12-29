@@ -9,6 +9,12 @@ const Model = {
     effects: {
         *setDetails_e(action, { call, put, select }) {
             const { abandonedcheckouts } = yield select();
+            yield put({
+                type: 'setDetails_r',
+                payload: {
+                    thisDetails: abandonedcheckouts.thisDetails,
+                }
+            });
             let productsImages = {};
             let res_Images;
             for (let item of abandonedcheckouts.thisDetails.line_items.values()) {
@@ -25,7 +31,6 @@ const Model = {
             yield put({
                 type: 'setDetails_r',
                 payload: {
-                    thisDetails: abandonedcheckouts.thisDetails,
                     productsImages: productsImages,
                 }
             });
