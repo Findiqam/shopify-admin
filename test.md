@@ -86,7 +86,7 @@
 
 #### 4.1.3
 
-    [自动化测试代码所在文件](D:\实训工具\实训工具\shopify-admin\python)
+    [自动化测试代码所在文件](https://github.com/85208520/shopify-admin/tree/zengde/python)
 
 ### 5 建议
 
