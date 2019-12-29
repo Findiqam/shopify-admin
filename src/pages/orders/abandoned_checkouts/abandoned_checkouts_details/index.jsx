@@ -40,7 +40,7 @@ class AbandonedCheckoutDetails extends React.Component {
                 >
                     <Card
                         title={<><div style={{ fontWeight: 500, fontSize: 35 }}>{name}</div>{moment(created_at).format("YYYY年MM月DD日 hh:mm:ss")}</>}
-                        loading={loading}
+                        loading={loading&&thisDetails===''}
                     >
                         {
                             thisDetails === "" ? "" :

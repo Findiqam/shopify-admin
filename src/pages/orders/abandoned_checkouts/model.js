@@ -55,7 +55,7 @@ const Model = {
                 type: 'setTableData_r',
                 payload: {
                     tableData: res_tabledata.data.checkouts,
-                    nowPages: 1,
+                    nowPage: 1,
                     previous: pagesUrl.previous,
                     next: pagesUrl.next,
                 }
