@@ -37,8 +37,9 @@
     - [ ] Order details
     - [x] Drafts
     - [ ] Drafts_orders details
-    - [ ] Create Drafts_orders
+    - [x] Create Drafts_orders
     - [x] Abandoned checkouts
+    - [x] Abandoned checkouts details
  - [ ] Products
     - [ ] All products
     - [ ] Transfers
@@ -54,6 +55,7 @@
 >   > [Drafts](https://findiqam.github.io/shopify-admin/#/orders/draft_orders)、
 >   > [All orders](https://findiqam.github.io/shopify-admin/#/orders/all-orders)、
 >   > [Abandoned checkouts](https://findiqam.github.io/shopify-admin/#/orders/abandoned_checkouts)、
+>   > [New draft order](https://findiqam.github.io/shopify-admin/#/orders/draft_orders/new)、
 >   > 页面。  
 
 > 刘衍:  
@@ -73,6 +75,7 @@
 #### 第三周
 
 > 马淇:  
+>   > 2019-12-25>>完成了[New draft order](https://findiqam.github.io/shopify-admin/#/orders/draft_orders/new)页面。优化之前所做页面的视觉效果
 >   > 2019-12-25>>完成了[Abandoned checkouts](https://findiqam.github.io/shopify-admin/#/orders/abandoned_checkouts)
 >   > 页面的实现数据过滤功能、分页功能，
 >   > 调整之前写过的代码，增强了代码复用性，加快类似页面的开发。添加了左菜单栏的简体中文和English两种语言的国际化。  
@@ -87,8 +90,9 @@
 >   >完成了[Customers](https://findiqam.github.io/shopify-admin/#/customers)页面  
 
 >李增德:  
->   >添加测试数据，测试已实现的功能，编写了测试文档和测试代码。[文档地址](https://github.com/85208520/shopify-admin/blob/zengde/test.md)  
->   >[测试代码地址](https://github.com/85208520/shopify-admin/blob/zengde/python)
+>   >添加测试数据，测试已实现的功能，编写了测试文档和测试代码。[文档地址](https://github.com/85208520/shopify-admin/blob/zengde/test.md),
+>   >[测试代码地址](https://github.com/85208520/shopify-admin/blob/zengde/python)。编写测试文档和补充测试代码[文档地址](https://github.com/85208520/shopify-admin/blob/zengde/test.md)
+
 >郑永斌:  
 >   >基本完成原型的制作  
 
@@ -105,7 +109,7 @@
 >   >完成了[Customers](https://findiqam.github.io/shopify-admin/#/customers)页面  
 
 >李增德:  
->   >添加测试数据，测试已实现的功能  
+>   >添加测试数据，测试已实现的功能。添加测试数据，编写Customers测试代码[代码地址](https://github.com/85208520/shopify-admin/blob/zengde/python/customer.py)   
 
 >郑永斌:  
 >   >基本完成原型的制作  
@@ -124,7 +128,8 @@
 >   >完成了[Customers](https://findiqam.github.io/shopify-admin/#/customers)页面的部分功能  
 
 >李增德:  
->   >添加测试数据，测试已实现的功能  
+>   >添加测试数据，测试已实现的功能。
+>   >编写Drafts[地址](https://github.com/85208520/shopify-admin/blob/zengde/python/draft.py)、 All orders[地址](https://github.com/85208520/shopify-admin/blob/zengde/python/All%20orders.py)、 Abandoned checkouts[地址](https://github.com/85208520/shopify-admin/blob/zengde/python/Abandoning%20documents.py)打开界面的自动化测试python  
 
 >郑永斌:  
 >   >完成了部分原型的制作  
