@@ -87,8 +87,8 @@
 >   >完成了[Customers](https://findiqam.github.io/shopify-admin/#/customers)页面  
 
 >李增德:  
->   >添加测试数据，测试已实现的功能  
-
+>   >添加测试数据，测试已实现的功能，编写了测试文档和测试代码。[文档地址](https://github.com/85208520/shopify-admin/blob/zengde/test.md)  
+>   >[测试代码地址](https://github.com/85208520/shopify-admin/blob/zengde/python)
 >郑永斌:  
 >   >基本完成原型的制作  
 
