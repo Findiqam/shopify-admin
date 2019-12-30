@@ -16,3 +16,4 @@ export async function createDraftOrder(params) {
 export async function queryProducts() {
     return await axios.get(apiBase + '/products.json?fields=id,title,variants,image,images')
 }
+
