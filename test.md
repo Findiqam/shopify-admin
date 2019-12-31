@@ -65,7 +65,7 @@
 | new order | 点击 | 跳转到新建草稿页 | 疯狂点击 | 无 | ![](https://github.com/85208520/shopify-admin/blob/zengde/python/8.png) |
 | 弃单 | 点击 | 跳转到弃单页 | 一直点 | 界面不动 | ![](https://github.com/85208520/shopify-admin/blob/zengde/python/9.png) |
 | 筛选条件 | 选择 | 显示筛选后的弃单 | 无 | 不显示筛选后的弃单，显示全部弃单 | ![](https://github.com/85208520/shopify-admin/blob/zengde/python/10.png) |
-| 弃单详情 | 点击弃单 | 显示弃单详情 | 无 | 不显示弃单详情 | ![](https://github.com/85208520/shopify-admin/blob/zengde/python/10.1.png) |
+| 弃单 | 点击弃单内容 | 跳转到弃单详情界面显示弃单详情 | 无 | 不显示弃单详情 | ![](https://github.com/85208520/shopify-admin/blob/zengde/python/10.1.png) |
 
 #### 4.1.2
 
