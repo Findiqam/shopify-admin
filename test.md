@@ -16,13 +16,13 @@
 
 #### 2.2 运行环境
 
-支持环境： Android 8 及以上。 测试环境：Selenium+Python 测试工具：Postman+Visual Studio Code
+支持环境： windows xp 及以上。 测试环境：Selenium+Python 测试工具：Postman+Visual Studio Code
 
 ### 3 测试计划
 
 #### 3.1 测试方案
 
-本测试计划采用黑盒测试的方法，采用接口 API 测试和 web 测试，先进行人工测试接口和点击测试打开页面，再用 Postman 进行 API 接口测试 Python 编写测试用例进行页面测试
+本测试计划采用自动化测试和手动测试的方法，采用接口 API 测试和 web 测试，先进行人工测试接口和点击测试打开页面，再用 Postman 进行 API 接口测试 Python 编写测试用例进行页面测试
 
 #### 3.2 测试内容
 
@@ -65,6 +65,7 @@
 | new order | 点击 | 跳转到新建草稿页 | 疯狂点击 | 无 | ![](https://github.com/85208520/shopify-admin/blob/zengde/python/8.png) |
 | 弃单 | 点击 | 跳转到弃单页 | 一直点 | 界面不动 | ![](https://github.com/85208520/shopify-admin/blob/zengde/python/9.png) |
 | 筛选条件 | 选择 | 显示筛选后的弃单 | 无 | 不显示筛选后的弃单，显示全部弃单 | ![](https://github.com/85208520/shopify-admin/blob/zengde/python/10.png) |
+| 弃单详情 | 点击弃单 | 显示弃单详情 | 无 | 不显示弃单详情 | ![](https://github.com/85208520/shopify-admin/blob/zengde/python/10.1.png) |
 
 #### 4.1.2
 
