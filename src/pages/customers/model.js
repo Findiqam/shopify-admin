@@ -1,4 +1,4 @@
-import { getCustomers, queryCustomers } from './service';
+import { getCustomers, queryCustomers, AddCustomers } from './service';
 const initialFilter = {
   name: '',
   orders_count: '',
@@ -9,6 +9,7 @@ const CustomersModel = {
     Customers: [],
     filter: initialFilter,
   },
+
   effects: {
     *fetch({}, { call, put, select }) {
       const { customers } = yield select();
@@ -17,8 +18,9 @@ const CustomersModel = {
         parameters = parameters + 'orders_count=' + customers.filter.orders_count + '&';
       }
       const res_customers = yield call(queryCustomers, parameters);
+      console.log('1', res_customers.data.customers);
       yield put({
-        type: 'changeCustomers',
+        type: 'getCustomers',
         payload: res_customers.data.customers,
       });
     },
@@ -30,14 +32,22 @@ const CustomersModel = {
       }
       const request = yield call(getCustomers, parameters);
       yield put({
-        type: 'changeCustomers',
+        type: 'getCustomers',
+        payload: request.data.customers,
+      });
+    },
+    *addcus(action, { call, put, select }) {
+      console.log(action.payload);
+      const request = yield call(AddCustomers, action.payload);
+      yield put({
+        type: getCustomers,
         payload: request.data.customers,
       });
     },
   },
 
   reducers: {
-    changeCustomers(state, { payload }) {
+    getCustomers(state, { payload }) {
       //获取数据
       return {
         ...state,
