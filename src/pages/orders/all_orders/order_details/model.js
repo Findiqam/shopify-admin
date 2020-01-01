@@ -1,4 +1,4 @@
-import { queryDetails, queryEvents } from './service';
+import { queryDetails, queryEvents, queryImages } from './service';
 
 const Model = {
     namespace: 'orderdetails',
@@ -21,13 +21,27 @@ const Model = {
                     call(queryDetails, orders.thisDetails),
                     call(queryEvents, orders.thisDetails),
                 ];
+                let line_items = res_details.data.order.line_items.map((item) => {
+                    return {
+                        id: item.variant_id,
+                        variant_id: item.variant_id,
+                        product_id: item.product_id,
+                        title: item.title,
+                        variant_title: item.variant_title,
+                        sku: item.sku,
+                        price: item.price,
+                        quantity: item.quantity,
+                        fulfillment_status: item.fulfillment_status,
+                        image_src: '',
+                    }
+                });
                 yield put({
                     type: 'setDetails_r',
                     payload: {
                         thisDetails: res_details.data.order,
                         thisEvents: res_events.data.events,
-                        unfulfilled: res_details.data.order.line_items.filter((item) => (item.fulfillment_status === null)),
-                        fulfilled: res_details.data.order.line_items.filter((item) => (item.fulfillment_status === 'fulfilled')),
+                        unfulfilled: line_items.filter((item) => (item.fulfillment_status === null)),
+                        fulfilled: line_items.filter((item) => (item.fulfillment_status === 'fulfilled')),
                         note: res_details.data.order.note,
                         customer: res_details.data.order.customer,
                         contact_information: {
@@ -37,7 +51,37 @@ const Model = {
                         shipping_address: res_details.data.order.shipping_address ? res_details.data.order.shipping_address : null,
                         billing_address: res_details.data.order.billing_address ? res_details.data.order.billing_address : null,
                     }
-                })
+                });
+                let productsImages = {};
+                let res_Images;
+                for (let item of res_details.data.order.line_items.values()) {
+                    res_Images = yield call(queryImages, item.product_id);
+                    productsImages = {
+                        ...productsImages,
+                        [item.product_id + 'v' + item.variant_id]: res_Images.data.images[0].src,
+                    }
+                    for (let image of res_Images.data.images) {
+                        if (image.variant_ids.includes(item.variant_id)) {
+                            productsImages = {
+                                ...productsImages,
+                                [item.product_id + 'v' + item.variant_id]: image.src,
+                            }
+                        }
+                    }
+                }
+                line_items = line_items.map((item) => {
+                    return {
+                        ...item,
+                        image_src: productsImages[item.product_id + 'v' + item.id],
+                    }
+                });
+                yield put({
+                    type: 'setDetails_r',
+                    payload: {
+                        unfulfilled: line_items.filter((item) => (item.fulfillment_status === null)),
+                        fulfilled: line_items.filter((item) => (item.fulfillment_status === 'fulfilled')),
+                    }
+                });
             }
         },
     },

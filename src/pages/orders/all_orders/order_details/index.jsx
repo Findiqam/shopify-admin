@@ -49,7 +49,7 @@ class OrderDetails extends React.Component {
             title={name}
             bordered={false}
           >
-            <Row>
+            <Row gutter={24}>
               <Col span={17}>
                 <Unfulfilled />
                 <Fulfilled />

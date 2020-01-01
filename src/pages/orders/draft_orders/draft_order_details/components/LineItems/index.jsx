@@ -87,7 +87,6 @@ class LineItems extends React.Component {
                                 </List.Item>
                             )
                         }
-
                     />
                     <Row>
                         <Col span={12}>

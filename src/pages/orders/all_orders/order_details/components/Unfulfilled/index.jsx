@@ -8,20 +8,22 @@ import {
     Modal,
     Form,
     Input,
+    List,
+
 } from 'antd';
 const mapStateToProps = ({ orderdetails, loading }) => ({
-    billing_address: orderdetails.billing_address,
+    unfulfilled: orderdetails.unfulfilled,
 })
 const mapDispatchToProps = (dispatch) => ({
 })
 @connect(mapStateToProps, mapDispatchToProps)
 class Unfulfilled extends React.Component {
     render() {
-        const { billing_address } = this.props;
+        const { unfulfilled } = this.props;
         return (
             <>
                 <Card
-                    title="Unfulfilled"
+                    title={"Unfulfilled(" + unfulfilled.length + ')'}
                     bordered={false}
                     extra={
                         <Button
@@ -36,9 +38,31 @@ class Unfulfilled extends React.Component {
                 </Button>
                     }
                 >
-                    <Row>
-                        
-                    </Row>
+                    <List
+                        dataSource={unfulfilled}
+                        renderItem={
+                            (item) => (
+                                <List.Item
+                                    extra={'$' + (item.price * item.quantity).toFixed(2)}
+                                >
+                                    <List.Item.Meta
+                                        avatar={<img src={item.image_src} style={{ width: 50 }} />}
+                                        title={<a>{item.title}</a>}
+                                        description={
+                                            <>
+                                                <div>{item.variant_title}</div>
+                                                <div>SKU: {item.sku}</div>
+                                            </>
+                                        }
+                                    />
+                                    <div style={{ margin: '48px 48px', width: 240 }}>
+                                        {'$' + item.price + ' x ' + item.quantity}
+                                        
+                                    </div>
+                                </List.Item>
+                            )
+                        }
+                    />
                 </Card>
             </>
         )
