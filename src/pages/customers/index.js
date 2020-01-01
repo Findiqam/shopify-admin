@@ -1,4 +1,4 @@
-import { Table, Button, Row, Col, Card, Input, Select } from 'antd';
+import { Table, Button, Row, Col, Card, Input, Select, Form } from 'antd';
 import React, { Component } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
@@ -8,7 +8,7 @@ const { Option } = Select;
 
 class Customers extends Component {
   state = {
-    name: '',
+    name: undefined,
   };
   handleChange = value => {
     this.setState({
@@ -20,13 +20,20 @@ class Customers extends Component {
     const { get_Customers } = this.props;
     get_Customers();
   }
+  handleSubmit(e) {
+    form.validateFields((err, values) => {
+      if (!err) {
+        console.log(values); // values即为表单键值对，可以直接异步请求
+
+        e.preventDefault();
+      } else {
+        e.preventDefault();
+      }
+    });
+  }
   render() {
     const selectBefore = (
-      <Select
-        defaultValue="请选择过滤方式"
-        onChange={value => this.handleChange(value)}
-        autoClearSearchValue
-      >
+      <Select defaultValue="请选择过滤方式" onChange={value => this.handleChange(value)}>
         <Option value="name">名字</Option>
         <Option value="orders_count">订单数量</Option>
       </Select>
@@ -39,6 +46,9 @@ class Customers extends Component {
       resetFilter,
       loading,
     } = this.props;
+    // const { first_name, default_address, orders_count, total_spent, } = customers;
+    // const {   } = default_address;
+    const { resetFields } = this.props.form;
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -53,33 +63,38 @@ class Customers extends Component {
         title: '名字',
         dataIndex: 'first_name',
         key: 'name',
-        render: (first_name, record) => first_name + ' ' + record.last_name,
+        render: (text, record) => record.first_name + ' ' + record.last_name,
       },
       {
         title: '地址',
-        dataIndex: 'default_address',
-        key: 'default_address',
-        render: default_address => default_address.province + ' ' + default_address.city,
+        // dataIndex: 'default_address',
+        // key: 'default_address',
+        render: (text, record, index) => {
+          if (record.default_address) {
+            return record.default_address.province + '' + record.default_address.city;
+          } else {
+            return null;
+          }
+        },
       },
       {
         title: '订单数量',
         dataIndex: 'orders_count',
         key: 'orders_count',
-        render: orders_count => orders_count,
+        render: (text, record, index) => text,
       },
       {
         title: '订单总价',
         dataIndex: 'total_spent',
         key: 'total_spent',
-        render: total_spent => '￥' + total_spent,
+        render: (text, record, index) => '￥' + text,
       },
     ];
-
     return (
       <PageHeaderWrapper>
         <Card>
           <Row type="flex">
-            <Col span={1} order={2} offset={16}>
+            <Col span={1} order={3} offset={12}>
               <Button
                 onClick={() => {
                   location.hash = '#/customers/Addcustomers';
@@ -88,9 +103,10 @@ class Customers extends Component {
                 添加客户
               </Button>
             </Col>
-            <Col span={6} order={1}>
+            <Col span={8} order={1}>
               <Search
                 addonBefore={selectBefore}
+                allowClear
                 onSearch={value => {
                   if (this.state.name == 'name') {
                     setFilter({ name: this.state.name, value });
@@ -102,14 +118,17 @@ class Customers extends Component {
                 }}
               />
             </Col>
+            <Col order={2}>
+              <Button
+                onClick={() => {
+                  resetFilter(), get_Customers(), resetFields(Search);
+                }}
+              >
+                重置
+              </Button>
+            </Col>
           </Row>
-          <Button
-            onClick={() => {
-              resetFilter(), get_Customers();
-            }}
-          >
-            重置
-          </Button>
+
           <Table
             columns={columns}
             dataSource={customers}
@@ -123,7 +142,7 @@ class Customers extends Component {
 }
 const mapStateToProps = ({ customers, loading }) => ({
   customers: customers.Customers,
-  loading: loading.models['ordcustomersrs'],
+  loading: loading.models['customers'],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -145,4 +164,5 @@ const mapDispatchToProps = dispatch => ({
       type: 'customers/resetFilter',
     }),
 });
+Customers = Form.create()(Customers);
 export default connect(mapStateToProps, mapDispatchToProps)(Customers);
