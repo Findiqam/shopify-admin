@@ -36,8 +36,17 @@ class ContactInformation extends React.Component {
                 </Button>
                     }
                 >
-                    <Row>
-                    </Row>
+                    {contact_information === null ?
+                        <Row>
+                            <Col span={24}>No email address</Col>
+                            <Col span={24}>No phone number</Col>
+                        </Row>
+                        :
+                        <Row>
+                            <Col span={24}>{contact_information.email === null || contact_information.email === '' ? 'No email address' : contact_information.email}</Col>
+                            <Col span={24}>{contact_information.phone === null || contact_information.phone === '' ? 'No phone number' : contact_information.phone}</Col>
+                        </Row>
+                    }
                 </Card>
             </>
         )

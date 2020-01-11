@@ -37,6 +37,12 @@ class ShippingAddress extends React.Component {
                     }
                 >
                     <Row>
+                        {/* <Col span={24}>{shipping_address.first_name + ' ' + shipping_address.last_name}</Col>
+                        <Col span={24}>{shipping_address.phone}</Col>
+                        <Col span={24}>{shipping_address.company}</Col>
+                        <Col span={24}>{shipping_address.address1 + ' ' + shipping_address.city}</Col>
+                        <Col span={24}>{shipping_address.zip + ' ' + shipping_address.province}</Col>
+                        <Col span={24}>{shipping_address.country}</Col> */}
                     </Row>
                 </Card>
             </>

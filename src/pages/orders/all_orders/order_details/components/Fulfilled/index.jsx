@@ -20,25 +20,38 @@ class Fulfilled extends React.Component {
         const { fulfilled } = this.props;
         return (
             <>
-                <Card
-                    title="Fulfilled"
-                    bordered={false}
-                    extra={
-                        <Button
-                            size='small'
-                            type='link'
-                            onClick={
-                                () => {
-                                }
+                {fulfilled.length === 0 ? <></> :
+                    <Card
+                        title={"Fulfilled(" + fulfilled.length + ')'}
+                        bordered={false}
+                    >
+                        <List
+                            dataSource={fulfilled}
+                            renderItem={
+                                (item) => (
+                                    <List.Item
+                                        extra={'$' + (item.price * item.quantity).toFixed(2)}
+                                    >
+                                        <List.Item.Meta
+                                            avatar={<img src={item.image_src} style={{ width: 50 }} />}
+                                            title={<a>{item.title}</a>}
+                                            description={
+                                                <>
+                                                    <div>{item.variant_title}</div>
+                                                    <div>SKU: {item.sku}</div>
+                                                </>
+                                            }
+                                        />
+                                        <div style={{ margin: '48px 48px', width: 240 }}>
+                                            {'$' + item.price + ' x ' + item.quantity}
+
+                                        </div>
+                                    </List.Item>
+                                )
                             }
-                        >
-                            Edit
-                </Button>
-                    }
-                >
-                    <Row>
-                    </Row>
-                </Card>
+                        />
+                    </Card>
+                }
             </>
         )
     }

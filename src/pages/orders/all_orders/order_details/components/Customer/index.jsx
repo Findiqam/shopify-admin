@@ -24,20 +24,15 @@ class Customer extends React.Component {
                     title="Customer"
                     bordered={false}
                     extra={
-                        <Button
-                            size='small'
-                            type='link'
-                            onClick={
-                                () => {
-                                }
-                            }
-                        >
-                            Edit
-                </Button>
+                        <Avatar icon="user" />
                     }
                 >
-                    <Row>
-                    </Row>
+                    {customer === null ? 'No customer' :
+                        <Row>
+                            <Col span={24}>{customer.first_name + ' ' + customer.last_name}</Col>
+                            <Col span={24}>{customer.orders_count + ' ' + 'orders'}</Col>
+                        </Row>
+                    }
                 </Card>
             </>
         )

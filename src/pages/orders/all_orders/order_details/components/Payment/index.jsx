@@ -22,18 +22,6 @@ class Payment extends React.Component {
                 <Card
                     title="Payment"
                     bordered={false}
-                    extra={
-                        <Button
-                            size='small'
-                            type='link'
-                            onClick={
-                                () => {
-                                }
-                            }
-                        >
-                            Edit
-                </Button>
-                    }
                 >
                     <Row>
                     </Row>

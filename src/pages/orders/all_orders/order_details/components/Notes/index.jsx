@@ -36,7 +36,7 @@ class Notes extends React.Component {
                 </Button>
                     }
                 >
-                    {note}
+                    {note === '' ? 'No notes from customer' : note}
                 </Card>
             </>
         )

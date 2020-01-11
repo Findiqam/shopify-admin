@@ -22,48 +22,38 @@ class Unfulfilled extends React.Component {
         const { unfulfilled } = this.props;
         return (
             <>
-                <Card
-                    title={"Unfulfilled(" + unfulfilled.length + ')'}
-                    bordered={false}
-                    extra={
-                        <Button
-                            size='small'
-                            type='link'
-                            onClick={
-                                () => {
-                                }
+                {unfulfilled.length === 0 ? <></> :
+                    <Card
+                        title={"Unfulfilled(" + unfulfilled.length + ')'}
+                        bordered={false}
+                    >
+                        <List
+                            dataSource={unfulfilled}
+                            renderItem={
+                                (item) => (
+                                    <List.Item
+                                        extra={'$' + (item.price * item.quantity).toFixed(2)}
+                                    >
+                                        <List.Item.Meta
+                                            avatar={<img src={item.image_src} style={{ width: 50 }} />}
+                                            title={<a>{item.title}</a>}
+                                            description={
+                                                <>
+                                                    <div>{item.variant_title}</div>
+                                                    <div>SKU: {item.sku}</div>
+                                                </>
+                                            }
+                                        />
+                                        <div style={{ margin: '48px 48px', width: 240 }}>
+                                            {'$' + item.price + ' x ' + item.quantity}
+
+                                        </div>
+                                    </List.Item>
+                                )
                             }
-                        >
-                            Edit
-                </Button>
-                    }
-                >
-                    <List
-                        dataSource={unfulfilled}
-                        renderItem={
-                            (item) => (
-                                <List.Item
-                                    extra={'$' + (item.price * item.quantity).toFixed(2)}
-                                >
-                                    <List.Item.Meta
-                                        avatar={<img src={item.image_src} style={{ width: 50 }} />}
-                                        title={<a>{item.title}</a>}
-                                        description={
-                                            <>
-                                                <div>{item.variant_title}</div>
-                                                <div>SKU: {item.sku}</div>
-                                            </>
-                                        }
-                                    />
-                                    <div style={{ margin: '48px 48px', width: 240 }}>
-                                        {'$' + item.price + ' x ' + item.quantity}
-                                        
-                                    </div>
-                                </List.Item>
-                            )
-                        }
-                    />
-                </Card>
+                        />
+                    </Card>
+                }
             </>
         )
     }

@@ -40,18 +40,6 @@ class OrderTimeLine extends React.Component {
                 <Card
                     title="TimeLine"
                     bordered={false}
-                    extra={
-                        <Button
-                            size='small'
-                            type='link'
-                            onClick={
-                                () => {
-                                }
-                            }
-                        >
-                            Edit
-                </Button>
-                    }
                 >
                     <Timeline>
                         {eventsTimelineItem}
